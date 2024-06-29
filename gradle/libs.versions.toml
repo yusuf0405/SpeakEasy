@@ -46,8 +46,8 @@ mpfilepicker = "3.1.0"
 
 compose-icons = "1.1.0"
 junit = "4.13.2"
-androidx-test-junit = "1.2.0"
-androidx-espresso-core = "3.6.0"
+androidx-test-junit = "1.2.1"
+androidx-espresso-core = "3.6.1"
 lifecycleLivedataCoreKtx = "2.8.2"
 
 [libraries]
