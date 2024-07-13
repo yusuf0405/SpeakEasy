@@ -8,7 +8,7 @@ multiple languages and an easy-to-use interface, it’s perfect for travel and l
   Kotlin.
 
 [![Kotlin](https://img.shields.io/badge/Kotlin-2.0.0-blue.svg?style=flat&logo=kotlin)](https://kotlinlang.org)
-![badge-kmp](https://img.shields.io/badge/KMP-1.6.1.1-blue)
+![badge-kmp](https://img.shields.io/badge/KMP-1.6.11-blue)
 ![badge-android](http://img.shields.io/badge/platform-android-6EDB8D.svg?style=flat)
 ![badge-ios](http://img.shields.io/badge/platform-ios-CDCDCD.svg?style=flat)
 

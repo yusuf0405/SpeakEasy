@@ -1,6 +1,7 @@
 package org.speak.easy.translator.models
 
 import androidx.compose.runtime.Immutable
+import org.speak.easy.ui.components.models.LanguageUi
 
 internal enum class LastLanguageState {
     FROM_NETWORK,

@@ -13,7 +13,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -22,7 +21,6 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
-import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -38,11 +36,10 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
+import org.speak.easy.languages.api.LanguageFeatureApi
 import org.speak.easy.translator.components.LanguageWithFlagComponent
-import org.speak.easy.translator.components.LanguagesModalBottomSheet
 import org.speak.easy.translator.components.MicrophoneRecordingAnimation
 import org.speak.easy.translator.components.TranslatorCard
-import org.speak.easy.translator.models.BottomSheetUiState
 import org.speak.easy.translator.models.TranslatorScreenUiState
 import org.speak.easy.ui.core.extensions.SpacerHeight
 import org.speak.easy.ui.core.extensions.SpacerWidth
@@ -63,12 +60,11 @@ import speakeasy.ui_core.generated.resources.translate
 internal fun TranslatorScreen(
     modifier: Modifier = Modifier,
     uiState: TranslatorScreenUiState,
-    bottomSheetUiState: BottomSheetUiState,
+    languageFeatureApi: LanguageFeatureApi,
     onAction: (TranslatorScreenAction) -> Unit
 ) {
     var openSourceBottomSheet by rememberSaveable { mutableStateOf(false) }
     var openTargetBottomSheet by rememberSaveable { mutableStateOf(false) }
-    val bottomSheetState = rememberModalBottomSheetState(skipPartiallyExpanded = false)
 
     Box(
         modifier = modifier
@@ -77,44 +73,32 @@ internal fun TranslatorScreen(
             .verticalScroll(rememberScrollState())
     ) {
         if (openSourceBottomSheet) {
-            LanguagesModalBottomSheet(
-                uiState = bottomSheetUiState,
-                languages = bottomSheetUiState.sourceLanguages,
+            languageFeatureApi.showLanguagesModal(
+                isSourceLanguage = true,
                 currentLanguage = uiState.sourceLanguage.name,
                 otherLanguage = uiState.targetLanguage.name,
-                modifier = Modifier.align(Alignment.BottomCenter),
-                bottomSheetState = bottomSheetState,
                 onDismissRequest = {
-                    onAction(TranslatorScreenAction.OnClearSearchQuery)
                     openSourceBottomSheet = false
                 },
                 onClick = {
                     onAction(TranslatorScreenAction.OnSourceTextClick(it))
-                    onAction(TranslatorScreenAction.OnClearSearchQuery)
                     openSourceBottomSheet = false
                 },
-                onSearchValueChange = { onAction(TranslatorScreenAction.OnSearch(it)) }
             )
         }
 
         if (openTargetBottomSheet) {
-            LanguagesModalBottomSheet(
-                uiState = bottomSheetUiState,
-                languages = bottomSheetUiState.targetLanguages,
+            languageFeatureApi.showLanguagesModal(
+                isSourceLanguage = false,
                 currentLanguage = uiState.targetLanguage.name,
                 otherLanguage = uiState.sourceLanguage.name,
-                modifier = Modifier.align(Alignment.BottomCenter),
-                bottomSheetState = bottomSheetState,
                 onDismissRequest = {
                     openTargetBottomSheet = false
-                    onAction(TranslatorScreenAction.OnClearSearchQuery)
                 },
                 onClick = {
                     onAction(TranslatorScreenAction.OnTargetTextClick(it))
-                    onAction(TranslatorScreenAction.OnClearSearchQuery)
                     openTargetBottomSheet = false
-                },
-                onSearchValueChange = { onAction(TranslatorScreenAction.OnSearch(it)) }
+                }
             )
         }
         if (uiState.isError) {

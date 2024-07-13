@@ -14,7 +14,7 @@ struct ContentView: View {
 
     var body: some View {
         ZStack {
-        ComposeView().ignoresSafeArea(.all, edges: .bottom) // Compose has own keyboard handler
-     }.preferredColorScheme(.none)
+        ComposeView()
+     }
 }
 }

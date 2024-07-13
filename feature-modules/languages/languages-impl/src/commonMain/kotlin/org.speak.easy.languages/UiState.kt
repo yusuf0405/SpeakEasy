@@ -1,9 +1,10 @@
-package org.speak.easy.translator.models
+package org.speak.easy.languages
 
 import androidx.compose.runtime.Immutable
+import org.speak.easy.ui.components.models.LanguageUi
 
 @Immutable
-internal data class BottomSheetUiState(
+internal data class UiState(
     val sourceLanguages: List<LanguageUi>,
     val targetLanguages: List<LanguageUi>,
     val historyLanguages: List<LanguageUi>,
@@ -13,7 +14,7 @@ internal data class BottomSheetUiState(
 ) {
 
     companion object {
-        val unknown = BottomSheetUiState(
+        val unknown = UiState(
             sourceLanguages = emptyList(),
             targetLanguages = emptyList(),
             historyLanguages = emptyList(),

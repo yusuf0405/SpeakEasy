@@ -65,6 +65,8 @@ class LanguagesHolderImpl(
             Pair(sourceDeferred.await(), targetDeferred.await())
         }
 
-        return LanguagesModel(sourceLanguages, targetLanguages)
+        return LanguagesModel(
+            sourceLanguages = sourceLanguages.sortedBy { it.name },
+            targetLanguages = targetLanguages.sortedBy { it.name })
     }
 }

@@ -23,7 +23,9 @@ import org.speak.easy.ui.core.theme.typography.LocalSpeakEasyTypography
 import org.speak.easy.ui.core.theme.typography.ProvideTypography
 import org.speak.easy.ui.core.theme.typography.debugTypography
 
-internal val LocalThemeIsDark = compositionLocalOf { mutableStateOf(true) }
+internal val LocalThemeIsDark = compositionLocalOf {
+    mutableStateOf(true)
+}
 
 private val defaultDimens = SpeakEasyDimens()
 
@@ -32,16 +34,12 @@ private val LocalDimens = staticCompositionLocalOf {
 }
 
 @Composable
-fun SpeakEasyTheme(
-    content: @Composable () -> Unit
-) {
+fun SpeakEasyTheme(content: @Composable () -> Unit) {
     val typography = SpeakEasyTypography()
     val systemIsDark = isSystemInDarkTheme()
     val isDarkState = remember { mutableStateOf(systemIsDark) }
 
-    CompositionLocalProvider(
-        LocalThemeIsDark provides isDarkState
-    ) {
+    CompositionLocalProvider(LocalThemeIsDark provides isDarkState) {
         val isDark by isDarkState
         val colors = if (isDark) darkPalette else lightPalette
         val dimensionSet = remember { defaultDimens }

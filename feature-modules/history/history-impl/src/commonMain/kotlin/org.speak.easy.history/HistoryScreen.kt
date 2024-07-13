@@ -32,7 +32,6 @@ internal fun HistoryScreen(
     LazyColumn(
         modifier = modifier
             .fillMaxSize()
-            .navigationBarsPadding()
             .background(SpeakEasyTheme.colors.backgroundPrimary),
         contentPadding = PaddingValues(SpeakEasyTheme.dimens.dp8),
         verticalArrangement = Arrangement.spacedBy(SpeakEasyTheme.dimens.dp12)

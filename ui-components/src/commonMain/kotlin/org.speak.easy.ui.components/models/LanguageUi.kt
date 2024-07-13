@@ -1,4 +1,4 @@
-package org.speak.easy.translator.models
+package org.speak.easy.ui.components.models
 
 import androidx.compose.runtime.Immutable
 import org.jetbrains.compose.resources.DrawableResource

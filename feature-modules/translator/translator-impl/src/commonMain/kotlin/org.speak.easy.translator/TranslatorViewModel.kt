@@ -3,14 +3,10 @@ package org.speak.easy.translator
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import org.speak.easy.core.ClipboardCopyManager
 import org.speak.easy.core.TextSharingManager
@@ -26,15 +22,12 @@ import org.speak.easy.domain.models.TranslateRequestBodyDomain
 import org.speak.easy.speech.api.SpeechRecognizerManager
 import org.speak.easy.speech.api.SpeechRecognizerResult
 import org.speak.easy.speech.api.TextToSpeechManager
-import org.speak.easy.translator.mappers.LanguageDomainToUiMapper
-import org.speak.easy.translator.models.BottomSheetUiState
-import org.speak.easy.translator.models.LanguageUi
 import org.speak.easy.translator.models.LastLanguageState
 import org.speak.easy.translator.models.RecordingStatus
 import org.speak.easy.translator.models.TranslatorScreenUiState
+import org.speak.easy.ui.components.mappers.LanguageDomainToUiMapper
+import org.speak.easy.ui.components.models.LanguageUi
 import org.speak.easy.ui.core.models.LanguageWithFlag
-
-private const val SEARCH_DEBOUNCE_MILLS = 200L
 
 internal class TranslatorViewModel(
     private val translationRepository: TranslationRepository,
@@ -49,16 +42,6 @@ internal class TranslatorViewModel(
 
     private val _uiState = MutableStateFlow(TranslatorScreenUiState.unknown)
     val uiState: StateFlow<TranslatorScreenUiState> = _uiState.asStateFlow()
-
-    private var _bottomSheetUiState = MutableStateFlow(BottomSheetUiState.unknown)
-    val bottomSheetUiState: StateFlow<BottomSheetUiState> = _bottomSheetUiState.asStateFlow()
-
-    private val searchQueryFlow = _bottomSheetUiState
-        .map { it.searchQuery }
-        .stateIn(viewModelScope, SharingStarted.Lazily, String())
-
-    private var sourceLanguages: List<LanguageUi> = emptyList()
-    private var targetLanguages: List<LanguageUi> = emptyList()
 
     init {
         viewModelScope.launchSafe {
@@ -83,85 +66,49 @@ internal class TranslatorViewModel(
             languagesHolder.fetchLanguages()
         }
 
-        languageHistoryRepository.observeLanguageHistory()
-            .map { it.map(languageDomainToUiMapper::map) }
-            .onEach { languages ->
-                _bottomSheetUiState.update { state ->
-                    state.copy(historyLanguages = languages.toSet().toList())
-                }
-            }.onError {
-
-            }.launchIn(viewModelScope)
-
         languagesHolder.languagesLoadStateFlow.onEach { state ->
             when (state) {
                 is LanguagesLoadState.Loading -> {
-                    _bottomSheetUiState.update { it.copy(isLoading = true) }
                     _uiState.update { uiState ->
                         uiState.copy(isLoading = uiState.lastLanguageState != LastLanguageState.FROM_CACHE)
                     }
                 }
 
-                is LanguagesLoadState.Error -> {
-
-                }
+                is LanguagesLoadState.Error -> Unit
 
                 is LanguagesLoadState.FinishError -> {
                     _uiState.update { uiState ->
                         uiState.copy(isError = uiState.lastLanguageState != LastLanguageState.FROM_CACHE)
                     }
-                    _bottomSheetUiState.update { it.copy(isError = true) }
                 }
 
                 is LanguagesLoadState.Success -> {
-                    sourceLanguages = state.languagesModel.targetLanguages
-                        .sortedBy { it.name }
-                        .map(languageDomainToUiMapper::map)
-                    targetLanguages = state.languagesModel.sourceLanguages
-                        .sortedBy { it.name }
-                        .map(languageDomainToUiMapper::map)
-
                     if (_uiState.value.lastLanguageState != LastLanguageState.FROM_CACHE) {
+                        val languagesModel = state.languagesModel
+
+                        val sourceLanguage = languagesModel
+                            .sourceLanguages
+                            .first()
+                            .run(languageDomainToUiMapper::map)
+
+                        val targetLanguage = languagesModel
+                            .targetLanguages[1]
+                            .run(languageDomainToUiMapper::map)
+
                         _uiState.update {
                             it.copy(
-                                sourceLanguage = sourceLanguages.first(),
-                                targetLanguage = targetLanguages[1],
+                                sourceLanguage = sourceLanguage,
+                                targetLanguage = targetLanguage,
                                 isLoading = false
                             )
                         }
-                    }
-                    _bottomSheetUiState.update {
-                        it.copy(
-                            isLoading = false,
-                            targetLanguages = targetLanguages,
-                            sourceLanguages = sourceLanguages
-                        )
                     }
                 }
 
                 is LanguagesLoadState.Initial -> Unit
             }
         }.onError {
-
-        }.launchIn(viewModelScope)
-
-        searchQueryFlow.debounce(SEARCH_DEBOUNCE_MILLS).onEach { query ->
-            _bottomSheetUiState.update { state ->
-                state.copy(
-                    sourceLanguages = if (query.isEmpty()) {
-                        sourceLanguages
-                    } else {
-                        sourceLanguages.search(query)
-                    },
-                    targetLanguages = if (query.isEmpty()) {
-                        targetLanguages
-                    } else {
-                        targetLanguages.search(query)
-                    }
-                )
-            }
-        }.onError {
-
+            // TODO: Handle error
         }.launchIn(viewModelScope)
 
         _uiState.onEach { state ->
@@ -254,14 +201,6 @@ internal class TranslatorViewModel(
                 addLanguageToHistory(action.language)
             }
 
-            is TranslatorScreenAction.OnSearch -> {
-                _bottomSheetUiState.update { it.copy(searchQuery = action.query) }
-            }
-
-            is TranslatorScreenAction.OnClearSearchQuery -> {
-                _bottomSheetUiState.update { it.copy(searchQuery = "") }
-            }
-
             is TranslatorScreenAction.OnCopy -> {
                 clipboardCopyManager.setClipboard(action.text)
             }
@@ -295,19 +234,12 @@ internal class TranslatorViewModel(
 
     private fun addLanguageToHistory(language: LanguageUi) {
         viewModelScope.launchSafe {
-            val language = LanguageDomain(
+            val languageDomain = LanguageDomain(
                 language = language.languageCode,
                 name = language.name,
             )
-            languageHistoryRepository.addLanguage(language)
+            languageHistoryRepository.addLanguage(languageDomain)
         }
-    }
-
-    private fun List<LanguageUi>.search(query: String): List<LanguageUi> = filter {
-        it.name.contains(
-            query,
-            ignoreCase = true
-        )
     }
 
     private fun SpeechRecognizerResult.toRecordingStatus(): RecordingStatus {

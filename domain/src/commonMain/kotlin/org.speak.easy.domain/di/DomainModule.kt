@@ -5,5 +5,5 @@ import org.speak.easy.domain.holders.LanguagesHolder
 import org.speak.easy.domain.holders.LanguagesHolderImpl
 
 val domainModule = module {
-    factory<LanguagesHolder> { LanguagesHolderImpl(get()) }
+    single<LanguagesHolder> { LanguagesHolderImpl(get()) }
 }

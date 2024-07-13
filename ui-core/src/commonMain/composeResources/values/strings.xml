@@ -1,7 +1,10 @@
 <resources>
     <string name="speak_easy">Speak easy</string>
     <string name="history">History</string>
+    <string name="main">Main</string>
+    <string name="settings">Settings</string>
     <string name="translate">Translate</string>
+    <string name="translator">Translator</string>
     <string name="enter_the_text">Enter the text...</string>
     <string name="the_result_of_the_transfer">The result of the transfer</string>
     <string name="default_error_text">Failed to upload data</string>

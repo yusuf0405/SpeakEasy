@@ -1,11 +1,11 @@
-package org.speak.easy.translator.mappers
+package org.speak.easy.ui.components.mappers
 
 import org.speak.easy.core.Mapper
 import org.speak.easy.domain.models.LanguageDomain
-import org.speak.easy.translator.models.LanguageUi
+import org.speak.easy.ui.components.models.LanguageUi
 import org.speak.easy.ui.core.models.LanguageWithFlag
 
-internal class LanguageDomainToUiMapper : Mapper<LanguageDomain, LanguageUi> {
+class LanguageDomainToUiMapper : Mapper<LanguageDomain, LanguageUi> {
 
     override fun map(from: LanguageDomain): LanguageUi = from.run {
         LanguageUi(

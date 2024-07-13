@@ -1,4 +1,4 @@
-package org.speak.easy.translator.components
+package org.speak.easy.languages
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
@@ -7,32 +7,27 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.BottomSheetDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ModalBottomSheet
-import androidx.compose.material3.ModalBottomSheetDefaults
 import androidx.compose.material3.SheetState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
-import org.speak.easy.translator.models.BottomSheetUiState
-import org.speak.easy.translator.models.LanguageUi
+import org.speak.easy.ui.components.models.LanguageUi
+import org.speak.easy.ui.core.components.FlagItem
 import org.speak.easy.ui.core.components.SearchTextField
 import org.speak.easy.ui.core.extensions.SpacerHeight
 import org.speak.easy.ui.core.extensions.SpacerWidth
@@ -42,21 +37,20 @@ import speakeasy.ui_core.generated.resources.Res
 import speakeasy.ui_core.generated.resources.all_languages
 import speakeasy.ui_core.generated.resources.check_icon
 import speakeasy.ui_core.generated.resources.default_error_text
-import speakeasy.ui_core.generated.resources.enter_the_text
 import speakeasy.ui_core.generated.resources.recently_used
 
 @Composable
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
 @Preview
-internal fun LanguagesModalBottomSheet(
-    uiState: BottomSheetUiState,
+internal fun LanguagesBottomSheet(
+    uiState: UiState,
     languages: List<LanguageUi>,
     currentLanguage: String,
     otherLanguage: String,
     bottomSheetState: SheetState,
     onDismissRequest: () -> Unit,
     onClick: (LanguageUi) -> Unit,
-    onSearchValueChange: (String) -> Unit,
+    onAction: (LanguageScreenAction) -> Unit,
     modifier: Modifier = Modifier
 ) {
     ModalBottomSheet(
@@ -114,12 +108,12 @@ internal fun LanguagesModalBottomSheet(
                     ) {
                         SearchTextField(
                             value = uiState.searchQuery,
-                            onValueChange = onSearchValueChange
+                            onValueChange = { onAction(LanguageScreenAction.OnSearch(it)) }
                         )
                     }
                 }
             }
-            if (uiState.historyLanguages.isNotEmpty()) {
+            if (uiState.historyLanguages.isNotEmpty() && uiState.searchQuery.isEmpty()) {
                 item {
                     LanguageTitle(
                         modifier = Modifier.padding(top = SpeakEasyTheme.dimens.dp16),
@@ -130,7 +124,6 @@ internal fun LanguagesModalBottomSheet(
                     items = uiState.historyLanguages,
                     key = { it.languageCode }
                 ) { language ->
-
                     LanguageItem(
                         language = language,
                         onClick = onClick,
@@ -205,7 +198,7 @@ private fun LanguageItem(
 
         ) {
             if (language.flag != null) {
-                FlagItem(language.flag)
+                FlagItem(language.flag!!)
             }
             SpacerWidth(SpeakEasyTheme.dimens.dp12)
             Text(

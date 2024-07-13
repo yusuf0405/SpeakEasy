@@ -10,8 +10,10 @@ kotlin {
             implementation(projects.core)
             implementation(projects.uiCore)
             implementation(projects.domain)
+            implementation(projects.uiComponents)
             implementation(projects.featureModules.translator.translatorApi)
             implementation(projects.featureModules.speech.speechApi)
+            implementation(projects.featureModules.languages.languagesApi)
         }
     }
 }

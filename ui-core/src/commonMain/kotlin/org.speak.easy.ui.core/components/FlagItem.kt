@@ -1,4 +1,4 @@
-package org.speak.easy.translator.components
+package org.speak.easy.ui.core.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.size
@@ -11,7 +11,7 @@ import org.jetbrains.compose.resources.painterResource
 import org.speak.easy.ui.core.theme.SpeakEasyTheme
 
 @Composable
-internal fun FlagItem(
+fun FlagItem(
     flag: DrawableResource,
     modifier: Modifier = Modifier
 ) {
