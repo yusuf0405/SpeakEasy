@@ -33,7 +33,7 @@ internal fun HistoryScreen(
         modifier = modifier
             .fillMaxSize()
             .background(SpeakEasyTheme.colors.backgroundPrimary),
-        contentPadding = PaddingValues(SpeakEasyTheme.dimens.dp8),
+        contentPadding = PaddingValues(SpeakEasyTheme.dimens.dp16),
         verticalArrangement = Arrangement.spacedBy(SpeakEasyTheme.dimens.dp12)
     ) {
         stickyHeader {

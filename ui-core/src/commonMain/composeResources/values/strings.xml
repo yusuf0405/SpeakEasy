@@ -10,4 +10,7 @@
     <string name="default_error_text">Failed to upload data</string>
     <string name="recently_used">Recently used</string>
     <string name="all_languages">All languages</string>
+    <string name="camera">Camera</string>
+    <string name="error_in_text_recognition">Error in text recognition</string>
+    <string name="take_a_photo">Take a photo</string>
 </resources>

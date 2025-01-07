@@ -13,7 +13,6 @@ internal data class TranslatorScreenUiState(
     val targetLanguage: LanguageUi,
     val sourceLanguage: LanguageUi,
     val targetText: String,
-    val sourceText: String,
     val recordingStatus: RecordingStatus,
     val lastLanguageState: LastLanguageState,
     val isLoading: Boolean,
@@ -24,7 +23,6 @@ internal data class TranslatorScreenUiState(
         val unknown = TranslatorScreenUiState(
             sourceLanguage = LanguageUi.unknown,
             targetLanguage = LanguageUi.unknown,
-            sourceText = "",
             targetText = "",
             recordingStatus = RecordingStatus.Stopped,
             lastLanguageState = LastLanguageState.FROM_NETWORK,

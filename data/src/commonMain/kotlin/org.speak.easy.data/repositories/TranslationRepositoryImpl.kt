@@ -96,6 +96,12 @@ internal class TranslationRepositoryImpl(
             .run(selectedLanguageDataToDomainMapper::map)
     }
 
+    override fun observeSelectedLanguageData(): Flow<SelectedLanguageDomain> {
+        return selectedLanguageDataStore
+            .observeSelectedLanguageData()
+            .map(selectedLanguageDataToDomainMapper::map)
+    }
+
     override suspend fun removeHistoryById(id: Long) {
         historyLocalDataSource.removeHistoryById(id)
     }

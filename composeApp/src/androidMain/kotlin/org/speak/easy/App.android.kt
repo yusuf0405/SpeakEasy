@@ -19,7 +19,7 @@ import org.speak.easy.data.di.getSharedModule
 
 class AndroidApp : Application() {
 
-    private val activityContextFlow: MutableStateFlow<Context?> = MutableStateFlow(null)
+    private val activityContextFlow: MutableStateFlow<ComponentActivity?> = MutableStateFlow(null)
 
     override fun onCreate() {
         super.onCreate()
@@ -30,8 +30,8 @@ class AndroidApp : Application() {
         }
     }
 
-    fun updateActivityContext(context: Context) {
-        activityContextFlow.tryEmit(context)
+    fun updateActivityContext(activity: ComponentActivity) {
+        activityContextFlow.tryEmit(activity)
     }
 
     private fun initPlatformConfiguration() = module {

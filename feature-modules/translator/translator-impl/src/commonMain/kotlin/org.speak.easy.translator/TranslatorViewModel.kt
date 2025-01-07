@@ -3,10 +3,12 @@ package org.speak.easy.translator
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import org.speak.easy.core.ClipboardCopyManager
 import org.speak.easy.core.TextSharingManager
@@ -22,6 +24,7 @@ import org.speak.easy.domain.models.TranslateRequestBodyDomain
 import org.speak.easy.speech.api.SpeechRecognizerManager
 import org.speak.easy.speech.api.SpeechRecognizerResult
 import org.speak.easy.speech.api.TextToSpeechManager
+import org.speak.easy.translator.api.SourceTextManager
 import org.speak.easy.translator.models.LastLanguageState
 import org.speak.easy.translator.models.RecordingStatus
 import org.speak.easy.translator.models.TranslatorScreenUiState
@@ -37,34 +40,25 @@ internal class TranslatorViewModel(
     private val textToSpeechManager: TextToSpeechManager,
     private val clipboardCopyManager: ClipboardCopyManager,
     private val textSharingManager: TextSharingManager,
+    private val sourceTextManager: SourceTextManager,
     private val languageDomainToUiMapper: LanguageDomainToUiMapper
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(TranslatorScreenUiState.unknown)
     val uiState: StateFlow<TranslatorScreenUiState> = _uiState.asStateFlow()
 
+    val sourceText = sourceTextManager
+        .sourceText
+        .stateIn(viewModelScope, SharingStarted.Lazily, "")
+
     init {
-        viewModelScope.launchSafe {
-            val selectedLanguage = translationRepository.fetchLatestSelectedLanguage()
-            if (selectedLanguage != SelectedLanguageDomain.unknown) {
-                _uiState.update { state ->
-                    state.copy(
-                        sourceLanguage = LanguageUi(
-                            languageCode = selectedLanguage.sourceLanguageCode,
-                            name = selectedLanguage.sourceLanguage,
-                            flag = LanguageWithFlag.find(selectedLanguage.sourceLanguageCode)
-                        ),
-                        targetLanguage = LanguageUi(
-                            languageCode = selectedLanguage.targetLanguageCode,
-                            name = selectedLanguage.targetLanguage,
-                            flag = LanguageWithFlag.find(selectedLanguage.targetLanguageCode)
-                        ),
-                        lastLanguageState = LastLanguageState.FROM_CACHE
-                    )
-                }
+        translationRepository
+            .observeSelectedLanguageData()
+            .onEach(::updateSelectedLanguage)
+            .onError {
+                // TODO: Handle error
             }
-            languagesHolder.fetchLanguages()
-        }
+            .launchIn(viewModelScope)
 
         languagesHolder.languagesLoadStateFlow.onEach { state ->
             when (state) {
@@ -74,7 +68,9 @@ internal class TranslatorViewModel(
                     }
                 }
 
-                is LanguagesLoadState.Error -> Unit
+                is LanguagesLoadState.Error -> {
+                    // TODO: Handle error
+                }
 
                 is LanguagesLoadState.FinishError -> {
                     _uiState.update { uiState ->
@@ -83,25 +79,24 @@ internal class TranslatorViewModel(
                 }
 
                 is LanguagesLoadState.Success -> {
-                    if (_uiState.value.lastLanguageState != LastLanguageState.FROM_CACHE) {
-                        val languagesModel = state.languagesModel
+                    if (_uiState.value.lastLanguageState == LastLanguageState.FROM_CACHE) return@onEach
+                    val languagesModel = state.languagesModel
 
-                        val sourceLanguage = languagesModel
-                            .sourceLanguages
-                            .first()
-                            .run(languageDomainToUiMapper::map)
+                    val sourceLanguage = languagesModel
+                        .sourceLanguages
+                        .first()
+                        .run(languageDomainToUiMapper::map)
 
-                        val targetLanguage = languagesModel
-                            .targetLanguages[1]
-                            .run(languageDomainToUiMapper::map)
+                    val targetLanguage = languagesModel
+                        .targetLanguages[1]
+                        .run(languageDomainToUiMapper::map)
 
-                        _uiState.update {
-                            it.copy(
-                                sourceLanguage = sourceLanguage,
-                                targetLanguage = targetLanguage,
-                                isLoading = false
-                            )
-                        }
+                    _uiState.update {
+                        it.copy(
+                            sourceLanguage = sourceLanguage,
+                            targetLanguage = targetLanguage,
+                            isLoading = false
+                        )
                     }
                 }
 
@@ -111,30 +106,38 @@ internal class TranslatorViewModel(
             // TODO: Handle error
         }.launchIn(viewModelScope)
 
-        _uiState.onEach { state ->
-            val selectedLanguage = SelectedLanguageDomain(
-                targetLanguage = state.targetLanguage.name,
-                targetLanguageCode = state.targetLanguage.languageCode,
-                sourceLanguage = state.sourceLanguage.name,
-                sourceLanguageCode = state.sourceLanguage.languageCode
-            )
-            translationRepository.updateSelectedLanguage(selectedLanguage)
-        }.onError {
-
-        }.launchIn(viewModelScope)
-
         speechRecognizerManager.observeSpeech().onEach { result ->
             _uiState.update {
-                it.copy(
-                    recordingStatus = result.toRecordingStatus(),
-                    sourceText = if (result is SpeechRecognizerResult.Success) {
-                        "${it.sourceText} ${result.text}"
-                    } else {
-                        it.sourceText
-                    }
-                )
+                it.copy(recordingStatus = result.toRecordingStatus())
             }
+            sourceTextManager.setText(
+                if (result is SpeechRecognizerResult.Success) {
+                    "${sourceText.value} ${result.text}"
+                } else {
+                    sourceText.value
+                }
+            )
         }.launchIn(viewModelScope)
+    }
+
+    private suspend fun updateSelectedLanguage(selectedLanguage: SelectedLanguageDomain) {
+        if (selectedLanguage == SelectedLanguageDomain.unknown) return
+        _uiState.update { state ->
+            state.copy(
+                sourceLanguage = LanguageUi(
+                    languageCode = selectedLanguage.sourceLanguageCode,
+                    name = selectedLanguage.sourceLanguage,
+                    flag = LanguageWithFlag.find(selectedLanguage.sourceLanguageCode)
+                ),
+                targetLanguage = LanguageUi(
+                    languageCode = selectedLanguage.targetLanguageCode,
+                    name = selectedLanguage.targetLanguage,
+                    flag = LanguageWithFlag.find(selectedLanguage.targetLanguageCode)
+                ),
+                lastLanguageState = LastLanguageState.FROM_CACHE
+            )
+        }
+        languagesHolder.fetchLanguages()
     }
 
     fun onAction(action: TranslatorScreenAction) {
@@ -152,20 +155,21 @@ internal class TranslatorViewModel(
             }
 
             is TranslatorScreenAction.OnSwapLanguages -> {
-                _uiState.update { state ->
-                    state.copy(
-                        targetLanguage = state.sourceLanguage,
-                        sourceLanguage = state.targetLanguage,
-                        targetText = state.sourceText,
-                        sourceText = state.targetText
-                    )
+                val state = uiState.value
+                val selectedLanguage = SelectedLanguageDomain(
+                    targetLanguage = state.sourceLanguage.name,
+                    targetLanguageCode = state.sourceLanguage.languageCode,
+                    sourceLanguage = state.targetLanguage.name,
+                    sourceLanguageCode = state.targetLanguage.languageCode
+                )
+                viewModelScope.launchSafe {
+                    translationRepository.updateSelectedLanguage(selectedLanguage)
                 }
             }
 
             is TranslatorScreenAction.OnClearText -> {
-                _uiState.update { state ->
-                    state.copy(sourceText = "", targetText = "")
-                }
+                sourceTextManager.setText("")
+                _uiState.update { state -> state.copy(targetText = "") }
             }
 
             is TranslatorScreenAction.OnVoiceClick -> {
@@ -177,26 +181,37 @@ internal class TranslatorViewModel(
             }
 
             is TranslatorScreenAction.OnSourceTextChange -> {
-                _uiState.update { state ->
-                    state.copy(sourceText = action.text)
-                }
+                sourceTextManager.setText(action.text)
             }
 
             is TranslatorScreenAction.OnTargetTextClick -> {
-                _uiState.update { state ->
-                    if (state.targetLanguage.name == action.language.name) return@update state
-                    state.copy(targetLanguage = action.language)
+                val state = uiState.value
+                if (state.targetLanguage.name == action.language.name) return
+                val selectedLanguage = SelectedLanguageDomain(
+                    targetLanguage = action.language.name,
+                    targetLanguageCode = action.language.languageCode,
+                    sourceLanguage = state.targetLanguage.name,
+                    sourceLanguageCode = state.targetLanguage.languageCode
+                )
+                viewModelScope.launchSafe {
+                    translationRepository.updateSelectedLanguage(selectedLanguage)
                 }
+
                 doTranslateText()
                 addLanguageToHistory(action.language)
             }
 
             is TranslatorScreenAction.OnSourceTextClick -> {
-                _uiState.update { state ->
-                    if (state.sourceLanguage.name == action.language.name) return@update state
-                    state.copy(
-                        sourceLanguage = action.language,
-                    )
+                val state = uiState.value
+                if (state.sourceLanguage.name == action.language.name) return
+                val selectedLanguage = SelectedLanguageDomain(
+                    targetLanguage = state.targetLanguage.name,
+                    targetLanguageCode = state.targetLanguage.languageCode,
+                    sourceLanguage = action.language.name,
+                    sourceLanguageCode = action.language.languageCode
+                )
+                viewModelScope.launchSafe {
+                    translationRepository.updateSelectedLanguage(selectedLanguage)
                 }
                 addLanguageToHistory(action.language)
             }
@@ -206,15 +221,14 @@ internal class TranslatorViewModel(
             }
 
             is TranslatorScreenAction.OnShare -> {
-                val shareText = "${_uiState.value.sourceText}\n\n${_uiState.value.targetText}"
+                val shareText = "${sourceText.value}\n\n${_uiState.value.targetText}"
                 textSharingManager.shareText(shareText)
             }
         }
     }
 
-
     private fun doTranslateText() {
-        val sourceText = _uiState.value.sourceText
+        val sourceText = sourceText.value
         if (sourceText.isEmpty()) return
         val body = TranslateRequestBodyDomain(
             text = sourceText,

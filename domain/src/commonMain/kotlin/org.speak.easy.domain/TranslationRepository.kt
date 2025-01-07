@@ -20,6 +20,8 @@ interface TranslationRepository {
 
     suspend fun fetchLatestSelectedLanguage(): SelectedLanguageDomain
 
+    fun observeSelectedLanguageData(): Flow<SelectedLanguageDomain>
+
     suspend fun removeHistoryById(id: Long)
 
     suspend fun clearHistory()

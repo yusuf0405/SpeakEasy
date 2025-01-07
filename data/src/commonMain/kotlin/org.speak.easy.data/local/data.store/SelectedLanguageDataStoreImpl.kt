@@ -3,6 +3,7 @@ package org.speak.easy.data.local.data.store
 import androidx.datastore.core.DataStore
 import androidx.datastore.core.DataStoreFactory
 import androidx.datastore.core.okio.OkioStorage
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import okio.FileSystem
 import okio.Path.Companion.toPath
@@ -27,5 +28,9 @@ class SelectedLanguageDataStoreImpl(
 
     override suspend fun getSelectedLanguageData(): SelectedLanguageData {
         return dataStore.data.first()
+    }
+
+    override fun observeSelectedLanguageData(): Flow<SelectedLanguageData> {
+        return dataStore.data
     }
 }

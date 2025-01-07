@@ -5,11 +5,13 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import org.speak.easy.ui.core.theme.SpeakEasyTheme
+import org.speak.easy.ui.core.theme.dimens.MediumElevation
 
 @Composable
 fun SpeakEasBottomNavigation(
@@ -18,9 +20,11 @@ fun SpeakEasBottomNavigation(
     onItemClick: (BottomNavigationItem) -> Unit
 ) {
     NavigationBar(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = Modifier
+            .fillMaxWidth()
+            .shadow(MediumElevation),
         containerColor = SpeakEasyTheme.colors.backgroundModal,
-        tonalElevation = SpeakEasyTheme.dimens.dp4
+        tonalElevation = MediumElevation
     ) {
         items.forEachIndexed { _, navigationItem ->
             NavigationBarItem(

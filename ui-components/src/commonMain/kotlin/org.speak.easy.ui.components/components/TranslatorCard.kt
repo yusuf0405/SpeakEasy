@@ -1,4 +1,4 @@
-package org.speak.easy.translator.components
+package org.speak.easy.ui.components.components
 
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -9,9 +9,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Shape
 import org.speak.easy.ui.core.theme.SpeakEasyTheme
 
-
 @Composable
-internal fun TranslatorCard(
+fun TranslatorCard(
     modifier: Modifier = Modifier,
     shape: Shape,
     content: @Composable ColumnScope.() -> Unit

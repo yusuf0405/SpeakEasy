@@ -1,4 +1,4 @@
-package org.speak.easy.translator.components
+package org.speak.easy.ui.components.components
 
 import androidx.compose.foundation.layout.Row
 import androidx.compose.material3.Text
@@ -26,7 +26,7 @@ internal fun LanguageWithFlagComponent(
         verticalAlignment = Alignment.CenterVertically
     ) {
         if (language.flag != null && !isEndShow) {
-            FlagItem(language.flag!!)
+            FlagItem(language.flag)
             SpacerWidth(SpeakEasyTheme.dimens.dp10)
         }
         Text(

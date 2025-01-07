@@ -64,7 +64,7 @@ internal fun HistoryItem(
     ) {
         Card(
             elevation = CardDefaults.elevatedCardElevation(
-                defaultElevation = SpeakEasyTheme.dimens.dp4
+                defaultElevation = SpeakEasyTheme.dimens.dp2
             ),
             colors = CardDefaults.cardColors(
                 containerColor = SpeakEasyTheme.colors.backgroundModal

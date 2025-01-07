@@ -12,7 +12,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -32,18 +31,17 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import org.speak.easy.languages.api.LanguageFeatureApi
-import org.speak.easy.translator.components.LanguageWithFlagComponent
 import org.speak.easy.translator.components.MicrophoneRecordingAnimation
-import org.speak.easy.translator.components.TranslatorCard
+import org.speak.easy.ui.components.components.TranslatorCard
 import org.speak.easy.translator.models.TranslatorScreenUiState
+import org.speak.easy.ui.components.components.LanguagesRow
+import org.speak.easy.ui.components.components.ProgressBar
 import org.speak.easy.ui.core.extensions.SpacerHeight
 import org.speak.easy.ui.core.extensions.SpacerWidth
-import org.speak.easy.ui.core.extensions.clickableNoRipple
 import org.speak.easy.ui.core.theme.SpeakEasyTheme
 import org.speak.easy.ui.core.theme.colors.ControlPrimaryActive
 import speakeasy.ui_core.generated.resources.Res
@@ -51,7 +49,6 @@ import speakeasy.ui_core.generated.resources.close_icon
 import speakeasy.ui_core.generated.resources.content_copy
 import speakeasy.ui_core.generated.resources.enter_the_text
 import speakeasy.ui_core.generated.resources.fluent_speaker
-import speakeasy.ui_core.generated.resources.ic_round_swap
 import speakeasy.ui_core.generated.resources.share_fill
 import speakeasy.ui_core.generated.resources.the_result_of_the_transfer
 import speakeasy.ui_core.generated.resources.translate
@@ -60,6 +57,7 @@ import speakeasy.ui_core.generated.resources.translate
 internal fun TranslatorScreen(
     modifier: Modifier = Modifier,
     uiState: TranslatorScreenUiState,
+    sourceText: String,
     languageFeatureApi: LanguageFeatureApi,
     onAction: (TranslatorScreenAction) -> Unit
 ) {
@@ -113,75 +111,24 @@ internal fun TranslatorScreen(
         } else {
             Column(modifier = Modifier.padding(SpeakEasyTheme.dimens.dp16)) {
                 LanguagesRow(
-                    uiState = uiState,
-                    onAction = onAction,
-                    onDismissSourceBottomSheet = { openSourceBottomSheet = !openSourceBottomSheet },
-                    onDismissTargetBottomSheet = { openTargetBottomSheet = !openTargetBottomSheet }
+                    isLoading = uiState.isLoading,
+                    sourceLanguage = uiState.sourceLanguage,
+                    targetLanguage = uiState.targetLanguage,
+                    onSwapLanguages = { onAction(TranslatorScreenAction.OnSwapLanguages) },
+                    onClickSourceLanguage = { openSourceBottomSheet = !openSourceBottomSheet },
+                    onClickTargetLanguage = { openTargetBottomSheet = !openTargetBottomSheet }
                 )
                 SpacerHeight(SpeakEasyTheme.dimens.dp20)
                 SourceTextCard(
                     uiState = uiState,
                     onAction = onAction,
+                    sourceText = sourceText
                 )
                 SpacerHeight(SpeakEasyTheme.dimens.dp26)
                 TargetTextCard(
                     uiState = uiState,
+                    sourceText = sourceText,
                     onAction = onAction
-                )
-            }
-        }
-    }
-}
-
-@Composable
-private fun LanguagesRow(
-    uiState: TranslatorScreenUiState,
-    onAction: (TranslatorScreenAction) -> Unit,
-    onDismissTargetBottomSheet: () -> Unit,
-    onDismissSourceBottomSheet: () -> Unit,
-    modifier: Modifier = Modifier
-) {
-    TranslatorCard(
-        modifier = modifier,
-        shape = RoundedCornerShape(size = SpeakEasyTheme.dimens.dp50)
-    ) {
-        Row(
-            modifier = Modifier
-                .padding(SpeakEasyTheme.dimens.dp16)
-                .fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            if (uiState.isLoading) {
-                ProgressBar(modifier = Modifier.weight(1f))
-            } else {
-                LanguageWithFlagComponent(
-                    modifier = Modifier.weight(1f),
-                    language = uiState.sourceLanguage,
-                    textAlign = TextAlign.Start,
-                    onClick = onDismissSourceBottomSheet
-                )
-            }
-            Image(
-                modifier = Modifier.clickableNoRipple {
-                    onAction(TranslatorScreenAction.OnSwapLanguages)
-                },
-                painter = painterResource(Res.drawable.ic_round_swap),
-                contentDescription = null,
-                colorFilter = ColorFilter.tint(color = SpeakEasyTheme.colors.iconsPrimary)
-            )
-            if (uiState.isLoading) {
-                ProgressBar(
-                    modifier = Modifier.weight(1f),
-                    alignment = Alignment.CenterEnd
-                )
-            } else {
-                LanguageWithFlagComponent(
-                    modifier = Modifier.weight(1f),
-                    language = uiState.targetLanguage,
-                    isEndShow = true,
-                    textAlign = TextAlign.End,
-                    onClick = onDismissTargetBottomSheet
                 )
             }
         }
@@ -191,6 +138,7 @@ private fun LanguagesRow(
 @Composable
 private fun SourceTextCard(
     uiState: TranslatorScreenUiState,
+    sourceText: String,
     onAction: (TranslatorScreenAction) -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -221,7 +169,7 @@ private fun SourceTextCard(
                         modifier = Modifier.clickable {
                             onAction(
                                 TranslatorScreenAction.OnVoiceClick(
-                                    uiState.sourceText,
+                                    sourceText,
                                     uiState.sourceLanguage.languageCode
                                 )
                             )
@@ -244,7 +192,7 @@ private fun SourceTextCard(
                 modifier = Modifier
                     .fillMaxWidth()
                     .offset(x = (-16).dp),
-                value = uiState.sourceText,
+                value = sourceText,
                 onValueChange = { onAction(TranslatorScreenAction.OnSourceTextChange(it)) },
                 textStyle = SpeakEasyTheme.typography.bodyMedium.medium,
                 colors = TextFieldDefaults.colors(
@@ -297,6 +245,7 @@ private fun SourceTextCard(
 @Composable
 private fun TargetTextCard(
     uiState: TranslatorScreenUiState,
+    sourceText: String,
     onAction: (TranslatorScreenAction) -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -366,7 +315,7 @@ private fun TargetTextCard(
                     contentDescription = null,
                     colorFilter = ColorFilter.tint(color = SpeakEasyTheme.colors.textPrimaryLink)
                 )
-                if (uiState.targetText.isNotEmpty() && uiState.sourceText.isNotEmpty()) {
+                if (uiState.targetText.isNotEmpty() && sourceText.isNotEmpty()) {
                     SpacerWidth(SpeakEasyTheme.dimens.dp8)
                     Image(
                         modifier = Modifier
@@ -379,23 +328,5 @@ private fun TargetTextCard(
                 }
             }
         }
-    }
-}
-
-@Composable
-private fun ProgressBar(
-    size: Dp = SpeakEasyTheme.dimens.dp24,
-    alignment: Alignment = Alignment.CenterStart,
-    modifier: Modifier = Modifier,
-) {
-    Box(
-        modifier = modifier.fillMaxWidth()
-    ) {
-        CircularProgressIndicator(
-            modifier = Modifier
-                .size(size)
-                .align(alignment),
-            strokeWidth = SpeakEasyTheme.dimens.dp2
-        )
     }
 }

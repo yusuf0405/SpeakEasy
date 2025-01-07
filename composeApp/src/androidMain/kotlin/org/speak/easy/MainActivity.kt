@@ -17,13 +17,12 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         val permissions = arrayOf(
             Manifest.permission.RECORD_AUDIO,
-            Manifest.permission.WRITE_EXTERNAL_STORAGE
+            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            Manifest.permission.CAMERA,
         )
-        ActivityCompat.requestPermissions(
-            this,
-            permissions,
-            REQUEST_RECORD_AUDIO_PERMISSION
-        )
+        ActivityCompat.requestPermissions(this, permissions, REQUEST_RECORD_AUDIO_PERMISSION)
+
+        this.lifecycle
         setContent {
             App()
         }

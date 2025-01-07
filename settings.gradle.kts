@@ -46,5 +46,7 @@ include(
     ":feature-modules:settings:settings-api",
     ":feature-modules:settings:settings-impl",
     ":feature-modules:languages:languages-api",
-    ":feature-modules:languages:languages-impl"
+    ":feature-modules:languages:languages-impl",
+    ":feature-modules:camera-capture:camera-capture-api",
+    ":feature-modules:camera-capture:camera-capture-impl",
 )
