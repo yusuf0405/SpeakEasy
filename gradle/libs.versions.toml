@@ -11,8 +11,8 @@ versionName = "1.0.0"
 
 # view kotlin and compose multiplatform compatibility here:
 # https://www.jetbrains.com/help/kotlin-multiplatform-dev/compose-compatibility-and-versioning.html#kotlin-compatibility
-kotlin = "2.0.21"
-compose-multiplatform = "1.7.0"
+kotlin = "2.0.20"
+compose-multiplatform = "1.6.11"
 
 agp = "8.4.2"
 
@@ -22,8 +22,8 @@ ksp = "2.0.20-1.0.25"
 # Libraries in alpha or beta
 lifecycle-compose = "2.8.3"
 navigation-compose = "2.8.0-alpha02"
-room = "2.7.0-alpha05"
-sqlite = "2.5.0-alpha05"
+room = "2.7.0-alpha08"
+sqlite = "2.5.0-alpha07"
 coil3 = "3.0.0-alpha06"
 camera-mlkit-vision = "1.4.1"
 
@@ -38,7 +38,7 @@ koin-compose = "1.1.3"
 kotlinx-coroutines = "1.8.1"
 kotlinx-serialization = "1.6.3"
 kotlinx-datetime = "0.6.0"
-skie = "0.6.2"
+skie = "0.8.4"
 okio = "3.9.0"
 paging-compose = "3.3.0-alpha02-0.5.1"
 

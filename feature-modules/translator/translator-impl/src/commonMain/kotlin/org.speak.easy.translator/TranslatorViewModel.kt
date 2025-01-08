@@ -2,6 +2,7 @@ package org.speak.easy.translator
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -32,6 +33,8 @@ import org.speak.easy.ui.components.mappers.LanguageDomainToUiMapper
 import org.speak.easy.ui.components.models.LanguageUi
 import org.speak.easy.ui.core.models.LanguageWithFlag
 
+private const val DEFAULT_DELAY_TIME = 1_000L
+
 internal class TranslatorViewModel(
     private val translationRepository: TranslationRepository,
     private val languageHistoryRepository: LanguageHistoryRepository,
@@ -52,6 +55,11 @@ internal class TranslatorViewModel(
         .stateIn(viewModelScope, SharingStarted.Lazily, "")
 
     init {
+        viewModelScope.launchSafe {
+            delay(DEFAULT_DELAY_TIME)
+            languagesHolder.fetchLanguages()
+        }
+
         translationRepository
             .observeSelectedLanguageData()
             .onEach(::updateSelectedLanguage)
@@ -61,6 +69,7 @@ internal class TranslatorViewModel(
             .launchIn(viewModelScope)
 
         languagesHolder.languagesLoadStateFlow.onEach { state ->
+            println("languagesLoadStateFlow: $state")
             when (state) {
                 is LanguagesLoadState.Loading -> {
                     _uiState.update { uiState ->
@@ -120,7 +129,7 @@ internal class TranslatorViewModel(
         }.launchIn(viewModelScope)
     }
 
-    private suspend fun updateSelectedLanguage(selectedLanguage: SelectedLanguageDomain) {
+    private fun updateSelectedLanguage(selectedLanguage: SelectedLanguageDomain) {
         if (selectedLanguage == SelectedLanguageDomain.unknown) return
         _uiState.update { state ->
             state.copy(
@@ -137,7 +146,6 @@ internal class TranslatorViewModel(
                 lastLanguageState = LastLanguageState.FROM_CACHE
             )
         }
-        languagesHolder.fetchLanguages()
     }
 
     fun onAction(action: TranslatorScreenAction) {

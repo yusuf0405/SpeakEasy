@@ -11,7 +11,6 @@ import org.speak.easy.data.local.data.store.SelectedLanguageDataStoreImpl
 import org.speak.easy.data.local.database.TranslationHistoryDatabase
 import org.speak.easy.data.local.database.dataBaseFileName
 import org.speak.easy.data.local.database.dataStoreFileName
-import org.speak.easy.data.local.database.instantiateImpl
 import platform.Foundation.NSDocumentDirectory
 import platform.Foundation.NSFileManager
 import platform.Foundation.NSURL
@@ -23,7 +22,6 @@ actual class DatabaseFactory actual constructor(platformConfiguration: PlatformC
         val dbFile = "${fileDirectory()}/$dataBaseFileName"
         return Room.databaseBuilder<TranslationHistoryDatabase>(
             name = dbFile,
-            factory = { TranslationHistoryDatabase::class.instantiateImpl() }
         ).setDriver(BundledSQLiteDriver())
             .setQueryCoroutineContext(Dispatchers.IO)
             .build()
