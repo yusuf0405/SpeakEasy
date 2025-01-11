@@ -69,7 +69,6 @@ internal class TranslatorViewModel(
             .launchIn(viewModelScope)
 
         languagesHolder.languagesLoadStateFlow.onEach { state ->
-            println("languagesLoadStateFlow: $state")
             when (state) {
                 is LanguagesLoadState.Loading -> {
                     _uiState.update { uiState ->
@@ -90,23 +89,18 @@ internal class TranslatorViewModel(
                 is LanguagesLoadState.Success -> {
                     if (_uiState.value.lastLanguageState == LastLanguageState.FROM_CACHE) return@onEach
                     val languagesModel = state.languagesModel
+                    val sourceLanguage = languagesModel.sourceLanguages.first()
+                    val targetLanguage = languagesModel.targetLanguages[1]
 
-                    val sourceLanguage = languagesModel
-                        .sourceLanguages
-                        .first()
-                        .run(languageDomainToUiMapper::map)
-
-                    val targetLanguage = languagesModel
-                        .targetLanguages[1]
-                        .run(languageDomainToUiMapper::map)
-
-                    _uiState.update {
-                        it.copy(
-                            sourceLanguage = sourceLanguage,
-                            targetLanguage = targetLanguage,
-                            isLoading = false
+                    translationRepository.updateSelectedLanguage(
+                        selectedLanguage = SelectedLanguageDomain(
+                            targetLanguage = targetLanguage.name,
+                            sourceLanguage = sourceLanguage.name,
+                            sourceLanguageCode = sourceLanguage.language,
+                            targetLanguageCode = targetLanguage.language
                         )
-                    }
+                    )
+                    _uiState.update { uiState -> uiState.copy(isLoading = false) }
                 }
 
                 is LanguagesLoadState.Initial -> Unit

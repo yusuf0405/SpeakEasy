@@ -50,6 +50,8 @@ kotlin {
             implementation(projects.featureModules.languages.languagesImpl)
             implementation(projects.featureModules.cameraCapture.cameraCaptureApi)
             implementation(projects.featureModules.cameraCapture.cameraCaptureImpl)
+            implementation(projects.featureModules.permission.permissionApi)
+            implementation(projects.featureModules.permission.permissionImpl)
 
             implementation(libs.lifecycle.runtime.compose)
             implementation(libs.lifecycle.viewmodel.compose)

@@ -30,6 +30,8 @@ camera-mlkit-vision = "1.4.1"
 android-splashscreen = "1.0.1"
 androidx-appcompat = "1.7.0"
 androidx-activity-compose = "1.9.3"
+accompanist-permissions = "0.37.0"
+
 compose-uitooling = "1.7.6"
 data-store = "1.1.1"
 ktor = "2.3.11"
@@ -118,6 +120,7 @@ paging-compose-common = { module = "app.cash.paging:paging-compose-common", vers
 # Other
 okio = { module = "com.squareup.okio:okio", version.ref = "okio" }
 skie-annotations = { module = "co.touchlab.skie:configuration-annotations", version.ref = "skie" }
+accompanist-permissions = { module = "com.google.accompanist:accompanist-permissions", version.ref = "accompanist-permissions" }
 
 composeIcons-featherIcons = { module = "br.com.devsrsouza.compose.icons:feather", version.ref = "compose-icons" }
 napier = { module = "io.github.aakira:napier", version.ref = "napier" }

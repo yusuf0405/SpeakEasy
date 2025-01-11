@@ -49,4 +49,6 @@ include(
     ":feature-modules:languages:languages-impl",
     ":feature-modules:camera-capture:camera-capture-api",
     ":feature-modules:camera-capture:camera-capture-impl",
+    ":feature-modules:permission:permission-api",
+    ":feature-modules:permission:permission-impl",
 )

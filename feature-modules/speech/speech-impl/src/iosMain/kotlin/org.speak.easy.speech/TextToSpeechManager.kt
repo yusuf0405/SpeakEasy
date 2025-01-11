@@ -14,11 +14,11 @@ private class IosTextToSpeechManager : TextToSpeechManager {
 
     override fun speak(text: String, languageCode: String) {
         speak(text)
-//        val synthesizer = AVSpeechSynthesizer()
-//        val utterance = AVSpeechUtterance(string = text)
-//        utterance.voice = AVSpeechSynthesisVoice.voiceWithLanguage(languageCode)
-//        utterance.setRate(0.4f)
-//        synthesizer.speakUtterance(utterance)
+        val synthesizer = AVSpeechSynthesizer()
+        val utterance = AVSpeechUtterance(string = text)
+        utterance.voice = AVSpeechSynthesisVoice.voiceWithLanguage(languageCode)
+        utterance.setRate(0.4f)
+        synthesizer.speakUtterance(utterance)
     }
 
     private var synthesizer: AVSpeechSynthesizer = AVSpeechSynthesizer()
@@ -26,24 +26,18 @@ private class IosTextToSpeechManager : TextToSpeechManager {
     var isPaused = false
     var utterance = AVSpeechUtterance()
 
-    init {
-//        synthesizer.delegate = this
-    }
-
     fun speak(text: String) {
-        // Resume speaking if there is unspoken text
         if (!isSpeaking && isPaused) {
             continueSpeaking()
         }
 
         utterance = AVSpeechUtterance.speechUtteranceWithString(text)
-        utterance.voice = AVSpeechSynthesisVoice.voiceWithLanguage("en-US") // default to english
+        utterance.voice = AVSpeechSynthesisVoice.voiceWithLanguage("en-US")
         if (utterance.voice == null) {
             println("Voice not found for language: ${utterance.voice?.language}")
             return
         }
 
-        // Detect language
         val recognizer = NLLanguageRecognizer()
         recognizer.processString(text)
         val language = recognizer.dominantLanguage
@@ -58,13 +52,12 @@ private class IosTextToSpeechManager : TextToSpeechManager {
 
     fun speechSynthesizer(
         synthesizer: AVSpeechSynthesizer,
-        @Suppress("PARAMETER_NAME_CHANGED_ON_OVERRIDE") //https://youtrack.jetbrains.com/issue/KT-43791/cocoapods-generated-code-with-same-parameter-types-and-order-but-different-names#focus=Comments-27-4574011.0-0
+        @Suppress("PARAMETER_NAME_CHANGED_ON_OVERRIDE")
         didFinishSpeechUtterance: AVSpeechUtterance
     ) {
         isSpeaking = false
     }
 
-    // Stop speaking
     fun stopSpeaking() {
         synthesizer.stopSpeakingAtBoundary(AVSpeechBoundary.AVSpeechBoundaryImmediate)
         isSpeaking = false

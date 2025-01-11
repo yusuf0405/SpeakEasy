@@ -14,12 +14,13 @@ import platform.AVFAudio.AVAudioSessionCategoryRecord
 import platform.AVFAudio.AVAudioSessionModeMeasurement
 import platform.AVFAudio.AVAudioSessionSetActiveOptionNotifyOthersOnDeactivation
 import platform.AVFAudio.setActive
+import platform.Foundation.NSThread
 import platform.Speech.SFSpeechAudioBufferRecognitionRequest
 import platform.Speech.SFSpeechRecognitionTask
 import platform.Speech.SFSpeechRecognizer
 import platform.Speech.SFSpeechRecognizerAuthorizationStatus
 
-private class IosSpeechRecognizerManager : SpeechRecognizerManager {
+class IosSpeechRecognizerManager : SpeechRecognizerManager {
 
     private var audioEngine: AVAudioEngine? = null
     private var recognitionTask: SFSpeechRecognitionTask? = null
@@ -31,68 +32,90 @@ private class IosSpeechRecognizerManager : SpeechRecognizerManager {
 
     override fun observeSpeech(): Flow<SpeechRecognizerResult> = speechResultFlow.asStateFlow()
 
-    @OptIn(ExperimentalForeignApi::class)
     override fun startListening(languageCode: String) {
+        if (!NSThread.isMainThread) return
         try {
-            stopListening()
-            speechResultFlow.tryEmit(SpeechRecognizerResult.StartListening)
-            audioEngine = AVAudioEngine()
-            SFSpeechRecognizer.requestAuthorization { status ->
-                if (status != SFSpeechRecognizerAuthorizationStatus.SFSpeechRecognizerAuthorizationStatusAuthorized) {
-                    speechResultFlow.tryEmit(SpeechRecognizerResult.Error)
-                    return@requestAuthorization
-                }
+            resetResources()
 
-                recognitionRequest = SFSpeechAudioBufferRecognitionRequest()
-                val inputNode = audioEngine?.inputNode
-                val audioSession = AVAudioSession.sharedInstance()
-
-                audioSession.setCategory(
-                    category = AVAudioSessionCategoryRecord,
-                    mode = AVAudioSessionModeMeasurement,
-                    options = AVAudioSessionCategoryOptionDuckOthers,
-                    error = null
-                )
-                audioSession.setActive(
-                    active = true,
-                    withOptions = AVAudioSessionSetActiveOptionNotifyOthersOnDeactivation,
-                    error = null
-                )
-
-                recognitionTask =
-                    speechRecognizer.recognitionTaskWithRequest(recognitionRequest!!) { result, error ->
-                        if (result != null) {
-                            speechResultFlow.tryEmit(SpeechRecognizerResult.Success(result.bestTranscription.formattedString))
-                            stopListening()
-                        } else if (error != null) {
-                            speechResultFlow.tryEmit(SpeechRecognizerResult.Error)
-                            stopListening()
-                        }
-                    }
-
-                val recordingFormat = inputNode?.inputFormatForBus(0u)
-                inputNode?.installTapOnBus(0u, bufferSize = 1024u, recordingFormat) { buffer, _ ->
-                    if (buffer != null) {
-                        recognitionRequest?.appendAudioPCMBuffer(buffer)
-                    }
-                }
-                audioEngine?.prepare()
-                audioEngine?.startAndReturnError(null)
-
+            val permissionStatus = SFSpeechRecognizer.authorizationStatus()
+            if (permissionStatus != SFSpeechRecognizerAuthorizationStatus.SFSpeechRecognizerAuthorizationStatusAuthorized) {
+                speechResultFlow.tryEmit(SpeechRecognizerResult.Error)
+                return
             }
+
+            speechResultFlow.tryEmit(SpeechRecognizerResult.StartListening)
+
+            audioEngine = AVAudioEngine()
+            recognitionRequest = SFSpeechAudioBufferRecognitionRequest()
+
+            setupAudioSession()
+            setupRecognitionTask()
+            startAudioEngine()
         } catch (e: Throwable) {
-            stopListening()
-            speechResultFlow.tryEmit(SpeechRecognizerResult.Error)
+            handleError(e.stackTraceToString())
         }
     }
 
     override fun stopListening() {
-        audioEngine?.stop()
-        recognitionRequest?.endAudio()
+        resetResources()
+        speechResultFlow.tryEmit(SpeechRecognizerResult.StopListening)
+    }
+
+    private fun resetResources() {
         recognitionTask?.cancel()
+        recognitionRequest?.endAudio()
         audioEngine?.stop()
         audioEngine?.inputNode?.removeTapOnBus(0u)
-        speechResultFlow.tryEmit(SpeechRecognizerResult.StopListening)
+
+        recognitionTask = null
+        recognitionRequest = null
+        audioEngine = null
+    }
+
+    @OptIn(ExperimentalForeignApi::class)
+    private fun setupAudioSession() {
+        val audioSession = AVAudioSession.sharedInstance()
+        audioSession.setCategory(
+            category = AVAudioSessionCategoryRecord,
+            mode = AVAudioSessionModeMeasurement,
+            options = AVAudioSessionCategoryOptionDuckOthers,
+            error = null
+        )
+        audioSession.setActive(
+            true,
+            withOptions = AVAudioSessionSetActiveOptionNotifyOthersOnDeactivation,
+            error = null
+        )
+    }
+
+    private fun setupRecognitionTask() {
+        recognitionTask =
+            speechRecognizer.recognitionTaskWithRequest(recognitionRequest!!) { result, error ->
+                if (error != null) {
+                    handleError(error.localizedDescription)
+                    return@recognitionTaskWithRequest
+                }
+                result?.let {
+                    speechResultFlow.tryEmit(SpeechRecognizerResult.Success(it.bestTranscription.formattedString))
+                }
+            }
+    }
+
+    @OptIn(ExperimentalForeignApi::class)
+    private fun startAudioEngine() {
+        val inputNode = audioEngine?.inputNode
+        val recordingFormat = inputNode?.inputFormatForBus(0u)
+        inputNode?.installTapOnBus(0u, bufferSize = 1024u, format = recordingFormat) { buffer, _ ->
+            buffer?.let { recognitionRequest?.appendAudioPCMBuffer(it) }
+        }
+        audioEngine?.prepare()
+        audioEngine?.startAndReturnError(null)
+    }
+
+    private fun handleError(errorMessage: String) {
+        resetResources()
+        println(errorMessage)
+        speechResultFlow.tryEmit(SpeechRecognizerResult.Error)
     }
 }
 

@@ -8,6 +8,7 @@ kotlin {
             implementation(projects.core)
             implementation(projects.uiCore)
             implementation(projects.domain)
+            implementation(libs.lifecycle.runtime.compose)
             implementation(projects.featureModules.speech.speechApi)
         }
     }

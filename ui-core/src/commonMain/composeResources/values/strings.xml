@@ -13,4 +13,9 @@
     <string name="camera">Camera</string>
     <string name="error_in_text_recognition">Error in text recognition</string>
     <string name="take_a_photo">Take a photo</string>
+    <string name="permission_must_be_given">Permission must be given</string>
+    <string name="camera_permission_description">To use the camera, go to settings and grant permission.</string>
+    <string name="microphone_permission_description">To use the microphone, go to settings and grant permission.</string>
+    <string name="go_to_settings">Go to Settings</string>
+    <string name="close">Close</string>
 </resources>

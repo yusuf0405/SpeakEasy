@@ -29,7 +29,7 @@
 	<key>NSMicrophoneUsageDescription</key>
 	<string>I need your permission (change this)</string>
 	<key>NSSpeechRecognitionUsageDescription</key>
-	<string>I need your permission (change this)</string>
+	<string>The application uses speech recognition to analyze sounds.</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>
@@ -54,5 +54,10 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<key>NSCameraUsageDescription</key>
+    <string>We need access to your camera to recognize photos.</string>
+
+    <key>NSMicrophoneUsageDescription</key>
+    <string>We need access to your microphone for voice recognition.</string>
 </dict>
 </plist>

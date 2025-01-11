@@ -21,6 +21,7 @@ kotlin {
             implementation(projects.uiComponents)
             implementation(projects.featureModules.cameraCapture.cameraCaptureApi)
             implementation(projects.featureModules.translator.translatorApi)
+            implementation(projects.featureModules.permission.permissionApi)
         }
     }
 }

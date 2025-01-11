@@ -17,6 +17,7 @@ import org.speak.easy.history.di.historyModule
 import org.speak.easy.languages.LanguageFeatureImpl
 import org.speak.easy.languages.api.LanguageFeatureApi
 import org.speak.easy.languages.di.languagesModule
+import org.speak.easy.permission.di.permissionsModule
 import org.speak.easy.settings.SettingsFeatureImpl
 import org.speak.easy.speech.speechFeatureModule
 import org.speak.easy.translator.TranslatorDependencies
@@ -38,6 +39,7 @@ fun getAppModules(): List<Module> = listOf(
     uiComponentsModule,
     languagesModule,
     cameraModule,
+    permissionsModule,
     featureDependenciesModule
 )
 

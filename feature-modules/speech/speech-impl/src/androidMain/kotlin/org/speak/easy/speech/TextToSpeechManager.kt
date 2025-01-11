@@ -19,7 +19,6 @@ private class AndroidTextToSpeechManager(
     private var currentSpokenWordIndex: Int = 0
     private var previousSpokenWordIndex: Int = 0
 
-    // This is the max number of words to speak per chunk, this is for pause/resume speaking
     private val kNumWordsToSpeakPerChunk = 25
 
     private val textToSpeech: TextToSpeech by lazy {
@@ -49,7 +48,6 @@ private class AndroidTextToSpeechManager(
     }
 
     override fun speak(text: String, languageCode: String) {
-        // Resume speaking if there is unspoken text
         if (!isSpeaking() && wordsToSpeak.isNotEmpty() && currentSpokenWordIndex < wordsToSpeak.size) {
             resumeSpeaking()
             return
@@ -65,7 +63,7 @@ private class AndroidTextToSpeechManager(
 
     private fun speakNextWords() {
         previousSpokenWordIndex =
-            currentSpokenWordIndex // Save this in case we need to resume speaking
+            currentSpokenWordIndex
         val nextWordsToSpeak = wordsToSpeak.subList(
             currentSpokenWordIndex,
             currentSpokenWordIndex + min(
@@ -112,8 +110,6 @@ private class AndroidTextToSpeechManager(
 
     override fun onStart(utteranceId: String?) {
         Log.d("tts", "onStart: $utteranceId")
-        // Yes, this queues up the next words to speak RIGHT AFTER the current word has started speaking.
-        // The issue is that the time between words is too long, so we need to queue up as fast as possible.
         if (wordsToSpeak.isNotEmpty() && currentSpokenWordIndex < wordsToSpeak.size) {
             speakNextWords()
         }
