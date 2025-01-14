@@ -11,13 +11,13 @@ versionName = "1.0.0"
 
 # view kotlin and compose multiplatform compatibility here:
 # https://www.jetbrains.com/help/kotlin-multiplatform-dev/compose-compatibility-and-versioning.html#kotlin-compatibility
-kotlin = "2.0.20"
+kotlin = "2.0.21"
 compose-multiplatform = "1.6.11"
 
 agp = "8.4.2"
 
 # view kotlin ksp version here: https://github.com/google/ksp/releases
-ksp = "2.0.20-1.0.25"
+ksp = "2.0.21-1.0.28"
 
 # Libraries in alpha or beta
 lifecycle-compose = "2.8.3"
