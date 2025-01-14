@@ -27,17 +27,17 @@ import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.speak.easy.ui.components.models.LanguageUi
-import org.speak.easy.ui.core.components.FlagItem
-import org.speak.easy.ui.core.components.SearchTextField
-import org.speak.easy.ui.core.extensions.SpacerHeight
-import org.speak.easy.ui.core.extensions.SpacerWidth
-import org.speak.easy.ui.core.extensions.clickableNoRipple
-import org.speak.easy.ui.core.theme.SpeakEasyTheme
-import speakeasy.ui_core.generated.resources.Res
-import speakeasy.ui_core.generated.resources.all_languages
-import speakeasy.ui_core.generated.resources.check_icon
-import speakeasy.ui_core.generated.resources.default_error_text
-import speakeasy.ui_core.generated.resources.recently_used
+import org.speak.easy.core.ui.components.FlagItem
+import org.speak.easy.core.ui.components.SearchTextField
+import org.speak.easy.core.ui.extensions.SpacerHeight
+import org.speak.easy.core.ui.extensions.SpacerWidth
+import org.speak.easy.core.ui.extensions.clickableNoRipple
+import org.speak.easy.core.designsystem.SpeakEasyTheme
+import speakeasy.core.ui.generated.resources.Res
+import speakeasy.core.ui.generated.resources.all_languages
+import speakeasy.core.ui.generated.resources.check_icon
+import speakeasy.core.ui.generated.resources.default_error_text
+import speakeasy.core.ui.generated.resources.recently_used
 
 @Composable
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)

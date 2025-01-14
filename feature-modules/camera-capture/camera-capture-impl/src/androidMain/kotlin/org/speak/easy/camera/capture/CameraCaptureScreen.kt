@@ -25,9 +25,9 @@ import org.speak.easy.camera.capture.models.CameraScreenUiState
 import org.speak.easy.camera.capture.models.RecognizeTextStatus
 import org.speak.easy.camera.capture.models.RecognizeTextStatus.*
 import org.speak.easy.ui.components.components.LanguagesRow
-import org.speak.easy.ui.core.theme.SpeakEasyTheme
-import speakeasy.ui_core.generated.resources.Res
-import speakeasy.ui_core.generated.resources.take_a_photo
+import org.speak.easy.core.designsystem.SpeakEasyTheme
+import speakeasy.core.ui.generated.resources.Res
+import speakeasy.core.ui.generated.resources.take_a_photo
 
 @Composable
 actual fun CameraCaptureScreen(

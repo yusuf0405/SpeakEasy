@@ -40,18 +40,18 @@ import org.speak.easy.ui.components.components.TranslatorCard
 import org.speak.easy.translator.models.TranslatorScreenUiState
 import org.speak.easy.ui.components.components.LanguagesRow
 import org.speak.easy.ui.components.components.ProgressBar
-import org.speak.easy.ui.core.extensions.SpacerHeight
-import org.speak.easy.ui.core.extensions.SpacerWidth
-import org.speak.easy.ui.core.theme.SpeakEasyTheme
-import org.speak.easy.ui.core.theme.colors.ControlPrimaryActive
-import speakeasy.ui_core.generated.resources.Res
-import speakeasy.ui_core.generated.resources.close_icon
-import speakeasy.ui_core.generated.resources.content_copy
-import speakeasy.ui_core.generated.resources.enter_the_text
-import speakeasy.ui_core.generated.resources.fluent_speaker
-import speakeasy.ui_core.generated.resources.share_fill
-import speakeasy.ui_core.generated.resources.the_result_of_the_transfer
-import speakeasy.ui_core.generated.resources.translate
+import org.speak.easy.core.ui.extensions.SpacerHeight
+import org.speak.easy.core.ui.extensions.SpacerWidth
+import org.speak.easy.core.designsystem.SpeakEasyTheme
+import org.speak.easy.core.designsystem.colors.ControlPrimaryActive
+import speakeasy.core.ui.generated.resources.Res
+import speakeasy.core.ui.generated.resources.close_icon
+import speakeasy.core.ui.generated.resources.content_copy
+import speakeasy.core.ui.generated.resources.enter_the_text
+import speakeasy.core.ui.generated.resources.fluent_speaker
+import speakeasy.core.ui.generated.resources.share_fill
+import speakeasy.core.ui.generated.resources.the_result_of_the_transfer
+import speakeasy.core.ui.generated.resources.translate
 
 @Composable
 internal fun TranslatorScreen(

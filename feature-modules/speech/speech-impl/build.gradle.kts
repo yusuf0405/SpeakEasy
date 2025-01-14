@@ -5,9 +5,10 @@ plugins {
 kotlin {
     sourceSets {
         commonMain.dependencies {
-            implementation(projects.core)
-            implementation(projects.uiCore)
-            implementation(projects.domain)
+            implementation(projects.core.common)
+            implementation(projects.core.ui)
+            implementation(projects.core.designsystem)
+            implementation(projects.core.domain)
             implementation(libs.lifecycle.runtime.compose)
             implementation(projects.featureModules.speech.speechApi)
         }

@@ -10,8 +10,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
-import org.speak.easy.ui.core.theme.SpeakEasyTheme
-import org.speak.easy.ui.core.theme.dimens.MediumElevation
+import org.speak.easy.core.designsystem.SpeakEasyTheme
+import org.speak.easy.core.designsystem.dimens.MediumElevation
 
 @Composable
 fun SpeakEasBottomNavigation(

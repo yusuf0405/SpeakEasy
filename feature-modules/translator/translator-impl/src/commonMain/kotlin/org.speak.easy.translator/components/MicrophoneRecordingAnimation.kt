@@ -20,10 +20,10 @@ import androidx.compose.ui.graphics.ColorFilter
 import org.jetbrains.compose.resources.painterResource
 import org.speak.easy.translator.models.RecordingStatus
 import org.speak.easy.translator.models.getRecordingColorByStatus
-import org.speak.easy.ui.core.extensions.clickableNoRipple
-import org.speak.easy.ui.core.theme.SpeakEasyTheme
-import speakeasy.ui_core.generated.resources.Res
-import speakeasy.ui_core.generated.resources.voice
+import org.speak.easy.core.ui.extensions.clickableNoRipple
+import org.speak.easy.core.designsystem.SpeakEasyTheme
+import speakeasy.core.ui.generated.resources.Res
+import speakeasy.core.ui.generated.resources.voice
 
 @Composable
 fun MicrophoneRecordingAnimation(

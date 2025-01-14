@@ -34,13 +34,13 @@ import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.Shape
 import org.jetbrains.compose.resources.painterResource
 import org.speak.easy.history.models.HistoryModel
-import org.speak.easy.ui.core.extensions.SpacerHeight
-import org.speak.easy.ui.core.extensions.SpacerWidth
-import org.speak.easy.ui.core.theme.SpeakEasyTheme
-import org.speak.easy.ui.core.theme.colors.ControlPrimaryActiveDark
-import speakeasy.ui_core.generated.resources.Res
-import speakeasy.ui_core.generated.resources.arrow_left
-import speakeasy.ui_core.generated.resources.more
+import org.speak.easy.core.ui.extensions.SpacerHeight
+import org.speak.easy.core.ui.extensions.SpacerWidth
+import org.speak.easy.core.designsystem.SpeakEasyTheme
+import org.speak.easy.core.designsystem.colors.ControlPrimaryActiveDark
+import speakeasy.core.ui.generated.resources.Res
+import speakeasy.core.ui.generated.resources.arrow_left
+import speakeasy.core.ui.generated.resources.more
 
 @Composable
 internal fun HistoryItem(

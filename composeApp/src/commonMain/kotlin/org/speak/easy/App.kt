@@ -25,12 +25,12 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.KoinContext
 import org.koin.compose.koinInject
 import org.speak.easy.core.FeatureApi
-import org.speak.easy.ui.core.SpeakEasyTopBar
-import org.speak.easy.ui.core.theme.SpeakEasyTheme
-import speakeasy.ui_core.generated.resources.Res
-import speakeasy.ui_core.generated.resources.history
-import speakeasy.ui_core.generated.resources.settings
-import speakeasy.ui_core.generated.resources.translator
+import org.speak.easy.core.ui.SpeakEasyTopBar
+import org.speak.easy.core.designsystem.SpeakEasyTheme
+import speakeasy.core.ui.generated.resources.Res
+import speakeasy.core.ui.generated.resources.history
+import speakeasy.core.ui.generated.resources.settings
+import speakeasy.core.ui.generated.resources.translator
 
 @Composable
 @Preview

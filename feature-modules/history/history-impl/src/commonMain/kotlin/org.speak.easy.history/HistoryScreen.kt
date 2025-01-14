@@ -19,8 +19,8 @@ import androidx.compose.material3.rememberSwipeToDismissBoxState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import org.speak.easy.history.components.HistoryItem
-import org.speak.easy.ui.core.components.SearchTextField
-import org.speak.easy.ui.core.theme.SpeakEasyTheme
+import org.speak.easy.core.ui.components.SearchTextField
+import org.speak.easy.core.designsystem.SpeakEasyTheme
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable

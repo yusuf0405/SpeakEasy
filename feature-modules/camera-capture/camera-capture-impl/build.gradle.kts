@@ -1,4 +1,3 @@
-
 plugins {
     alias(libs.plugins.speak.easy.library.impl)
     alias(libs.plugins.speak.easy.library.compose)
@@ -15,10 +14,11 @@ kotlin {
             implementation(libs.iconsax.android)
         }
         commonMain.dependencies {
-            implementation(projects.core)
-            implementation(projects.uiCore)
-            implementation(projects.domain)
-            implementation(projects.uiComponents)
+            implementation(projects.core.common)
+            implementation(projects.core.ui)
+            implementation(projects.core.designsystem)
+            implementation(projects.core.domain)
+            implementation(projects.core.uiComponents)
             implementation(projects.featureModules.cameraCapture.cameraCaptureApi)
             implementation(projects.featureModules.translator.translatorApi)
             implementation(projects.featureModules.permission.permissionApi)

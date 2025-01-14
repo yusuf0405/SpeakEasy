@@ -19,11 +19,11 @@ import org.speak.easy.permission.api.PermissionHandlerProvider
 import org.speak.easy.permission.api.PermissionStatus
 import org.speak.easy.permission.api.PermissionType
 import org.speak.easy.permission.api.RationalPermissionDialogProvider
-import speakeasy.ui_core.generated.resources.Res
-import speakeasy.ui_core.generated.resources.camera_permission_description
-import speakeasy.ui_core.generated.resources.close
-import speakeasy.ui_core.generated.resources.go_to_settings
-import speakeasy.ui_core.generated.resources.permission_must_be_given
+import speakeasy.core.ui.generated.resources.Res
+import speakeasy.core.ui.generated.resources.camera_permission_description
+import speakeasy.core.ui.generated.resources.close
+import speakeasy.core.ui.generated.resources.go_to_settings
+import speakeasy.core.ui.generated.resources.permission_must_be_given
 
 object CameraFeatureImpl : CameraFeatureApi {
 

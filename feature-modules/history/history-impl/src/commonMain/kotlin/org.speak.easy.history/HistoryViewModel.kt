@@ -2,7 +2,6 @@ package org.speak.easy.history
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -18,7 +17,6 @@ import org.speak.easy.core.exstensions.onError
 import org.speak.easy.domain.TranslationRepository
 import org.speak.easy.history.mappers.TranslationHistoryDomainToUiMapper
 import org.speak.easy.history.models.HistoryModel
-import org.speak.easy.speech.api.TextToSpeechManager
 
 internal class HistoryViewModel(
     private val translationRepository: TranslationRepository,

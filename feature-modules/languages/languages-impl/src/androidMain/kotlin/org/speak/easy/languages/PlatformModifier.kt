@@ -4,7 +4,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import org.speak.easy.ui.core.theme.SpeakEasyTheme
+import org.speak.easy.core.designsystem.SpeakEasyTheme
 
 @Composable
 private fun androidPlatformModifier() = PlatformModifier(

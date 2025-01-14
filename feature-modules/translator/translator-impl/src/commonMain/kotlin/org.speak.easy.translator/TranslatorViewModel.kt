@@ -31,7 +31,7 @@ import org.speak.easy.translator.models.RecordingStatus
 import org.speak.easy.translator.models.TranslatorScreenUiState
 import org.speak.easy.ui.components.mappers.LanguageDomainToUiMapper
 import org.speak.easy.ui.components.models.LanguageUi
-import org.speak.easy.ui.core.models.LanguageWithFlag
+import org.speak.easy.core.ui.models.LanguageWithFlag
 
 private const val DEFAULT_DELAY_TIME = 1_000L
 

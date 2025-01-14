@@ -15,7 +15,7 @@ import org.speak.easy.domain.TranslationRepository
 import org.speak.easy.domain.models.SelectedLanguageDomain
 import org.speak.easy.translator.api.SourceTextManager
 import org.speak.easy.ui.components.models.LanguageUi
-import org.speak.easy.ui.core.models.LanguageWithFlag
+import org.speak.easy.core.ui.models.LanguageWithFlag
 
 class CameraViewModel(
     private val translationRepository: TranslationRepository,

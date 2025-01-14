@@ -37,6 +37,7 @@ fun includeSubprojects() {
     initModules(rootDir, depth = 1, moduleBlackList)
     includeModulesIn("apps", depth = 1)
     includeModulesIn("feature-modules", depth = 2)
+    includeModulesIn("core", depth = 2)
 }
 
 fun includeModulesIn(directoryName: String, depth: Int) {

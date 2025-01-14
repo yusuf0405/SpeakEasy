@@ -8,7 +8,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import org.speak.easy.camera.capture.models.CameraScreenUiState
 import org.speak.easy.camera.capture.models.RecognizeTextStatus
-import org.speak.easy.ui.core.theme.SpeakEasyTheme
+import org.speak.easy.core.designsystem.SpeakEasyTheme
 
 @Composable
 actual fun CameraCaptureScreen(

@@ -12,7 +12,7 @@ import com.google.mlkit.vision.text.latin.TextRecognizerOptions
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import org.speak.easy.camera.capture.models.RecognizeTextStatus
-import org.speak.easy.ui.core.models.PhotoType
+import org.speak.easy.core.ui.models.PhotoType
 import java.io.File
 
 class TextFromPhotoRecognizeImpl(private val context: Context) : TextFromPhotoRecognize {
@@ -54,5 +54,5 @@ class TextFromPhotoRecognizeImpl(private val context: Context) : TextFromPhotoRe
         }
     }
 
-    private fun cratePhotoFilename() = "${System.currentTimeMillis()}." + PhotoType.JPG.suffix
+    private fun cratePhotoFilename() = "${System.currentTimeMillis()}." + org.speak.easy.core.ui.models.PhotoType.JPG.suffix
 }

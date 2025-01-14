@@ -8,8 +8,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.zIndex
 import org.speak.easy.permission.api.RationalPermissionDialogProvider
-import org.speak.easy.ui.core.theme.SpeakEasyTheme
-import org.speak.easy.ui.core.theme.colors.ControlPrimaryActive
+import org.speak.easy.core.designsystem.SpeakEasyTheme
+import org.speak.easy.core.designsystem.colors.ControlPrimaryActive
 
 class RationalPermissionDialogProviderImpl : RationalPermissionDialogProvider {
 

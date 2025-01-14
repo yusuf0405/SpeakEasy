@@ -33,11 +33,12 @@ kotlin {
             implementation(libs.androidx.activity.compose)
         }
         commonMain.dependencies {
-            implementation(projects.core)
-            implementation(projects.uiCore)
-            implementation(projects.data)
-            implementation(projects.domain)
-            implementation(projects.uiComponents)
+            implementation(projects.core.common)
+            implementation(projects.core.ui)
+            implementation(projects.core.designsystem)
+            implementation(projects.core.data)
+            implementation(projects.core.domain)
+            implementation(projects.core.uiComponents)
             implementation(projects.featureModules.translator.translatorApi)
             implementation(projects.featureModules.translator.translatorImpl)
             implementation(projects.featureModules.history.historyApi)
