@@ -1,3 +1,5 @@
+package org.speak.easy
+
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
@@ -12,13 +14,12 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import di.BOTTOM_NAVIGATION_ITEMS
-import di.FEATURE_API_MODULES
-import di.ScreenRoutesProvider
-import navigation.BottomNavigationItem
-import navigation.SpeakEasBottomNavigation
+import org.speak.easy.di.BOTTOM_NAVIGATION_ITEMS
+import org.speak.easy.di.FEATURE_API_MODULES
+import org.speak.easy.di.ScreenRoutesProvider
+import org.speak.easy.navigation.BottomNavigationItem
+import org.speak.easy.navigation.SpeakEasBottomNavigation
 import org.jetbrains.compose.resources.StringResource
-import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.KoinContext
@@ -28,9 +29,7 @@ import org.speak.easy.ui.core.SpeakEasyTopBar
 import org.speak.easy.ui.core.theme.SpeakEasyTheme
 import speakeasy.ui_core.generated.resources.Res
 import speakeasy.ui_core.generated.resources.history
-import speakeasy.ui_core.generated.resources.main
 import speakeasy.ui_core.generated.resources.settings
-import speakeasy.ui_core.generated.resources.speak_easy
 import speakeasy.ui_core.generated.resources.translator
 
 @Composable
@@ -41,7 +40,9 @@ fun App(
 ) = SpeakEasyTheme {
     KoinContext {
         val featureSet: List<FeatureApi> = koinInject(FEATURE_API_MODULES)
-        val bottomNavigationItemsList: List<BottomNavigationItem> = koinInject(BOTTOM_NAVIGATION_ITEMS)
+        val bottomNavigationItemsList: List<BottomNavigationItem> = koinInject(
+            BOTTOM_NAVIGATION_ITEMS
+        )
 
         val navBackStackEntry by navController.currentBackStackEntryAsState()
         val currentRoute by remember(navBackStackEntry) {

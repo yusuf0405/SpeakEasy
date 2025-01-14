@@ -1,4 +1,4 @@
-package navigation
+package org.speak.easy.navigation
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxWidth

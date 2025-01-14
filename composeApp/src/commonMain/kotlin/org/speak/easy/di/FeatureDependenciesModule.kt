@@ -1,4 +1,4 @@
-package di
+package org.speak.easy.di
 
 import org.koin.dsl.module
 import org.speak.easy.camera.capture.di.CameraCaptureDependencies

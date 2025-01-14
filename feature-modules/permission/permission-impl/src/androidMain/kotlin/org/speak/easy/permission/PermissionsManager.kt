@@ -4,7 +4,6 @@ import android.Manifest
 import android.content.Intent
 import android.net.Uri
 import android.provider.Settings
-import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
@@ -19,7 +18,6 @@ import com.google.accompanist.permissions.rememberMultiplePermissionsState
 import com.google.accompanist.permissions.rememberPermissionState
 import com.google.accompanist.permissions.shouldShowRationale
 import kotlinx.coroutines.launch
-import org.speak.easy.core.exstensions.launchSafe
 import org.speak.easy.permission.api.PermissionCallback
 import org.speak.easy.permission.api.PermissionHandler
 import org.speak.easy.permission.api.PermissionStatus
@@ -73,9 +71,6 @@ actual class PermissionsManager actual constructor(
         val lifecycleOwner = LocalLifecycleOwner.current
         LaunchedEffect(state) {
             val permissionResult = state.status
-            Log.i("Joseph", "isGranted: ${permissionResult.isGranted}")
-            Log.i("Joseph", "shouldShowRationale: ${permissionResult.shouldShowRationale}")
-
 
             if (!permissionResult.isGranted) {
                 if (permissionResult.shouldShowRationale) {

@@ -1,4 +1,4 @@
-package navigation
+package org.speak.easy.navigation
 
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.StringResource

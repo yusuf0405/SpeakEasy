@@ -1,6 +1,5 @@
-package di
+package org.speak.easy.di
 
-import navigation.BottomNavigationItemsFactoryImpl
 import org.koin.core.module.Module
 import org.koin.core.qualifier.StringQualifier
 import org.koin.core.qualifier.qualifier
@@ -17,6 +16,7 @@ import org.speak.easy.history.di.historyModule
 import org.speak.easy.languages.LanguageFeatureImpl
 import org.speak.easy.languages.api.LanguageFeatureApi
 import org.speak.easy.languages.di.languagesModule
+import org.speak.easy.navigation.BottomNavigationItemsFactory
 import org.speak.easy.permission.di.permissionsModule
 import org.speak.easy.settings.SettingsFeatureImpl
 import org.speak.easy.speech.speechFeatureModule
@@ -67,6 +67,6 @@ private val featureApiModule = module {
     single<LanguageFeatureApi> { LanguageFeatureImpl }
 
     single(qualifier = BOTTOM_NAVIGATION_ITEMS) {
-        BottomNavigationItemsFactoryImpl().create()
+        BottomNavigationItemsFactory().create()
     }
 }

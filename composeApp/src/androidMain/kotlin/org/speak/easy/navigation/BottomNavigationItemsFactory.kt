@@ -1,16 +1,15 @@
-package navigation
+package org.speak.easy.navigation
 
-import di.ScreenRoutesProvider
+import org.speak.easy.di.ScreenRoutesProvider
 import speakeasy.ui_core.generated.resources.Res
 import speakeasy.ui_core.generated.resources.camera
 import speakeasy.ui_core.generated.resources.history
 import speakeasy.ui_core.generated.resources.main
 import speakeasy.ui_core.generated.resources.mdi_translate
 import speakeasy.ui_core.generated.resources.photo_camera
-import speakeasy.ui_core.generated.resources.settings
 
-class BottomNavigationItemsFactoryImpl : BottomNavigationItemsFactory {
-    override fun create(): List<BottomNavigationItem> = listOf(
+actual class BottomNavigationItemsFactory {
+    actual fun create(): List<BottomNavigationItem> = listOf(
         BottomNavigationItem(
             icon = Res.drawable.history,
             title = Res.string.history,

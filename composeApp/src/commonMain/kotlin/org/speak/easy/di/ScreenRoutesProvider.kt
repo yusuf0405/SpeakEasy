@@ -1,4 +1,4 @@
-package di
+package org.speak.easy.di
 
 import org.speak.easy.camera.capture.CameraFeatureImpl
 import org.speak.easy.history.HistoryFeatureImpl

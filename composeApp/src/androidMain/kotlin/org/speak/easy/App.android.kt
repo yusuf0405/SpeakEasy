@@ -1,16 +1,9 @@
 package org.speak.easy
 
-import App
 import android.app.Application
-import android.content.Context
-import android.os.Bundle
-import android.util.Log
 import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
-import di.getAppModules
-import kotlinx.coroutines.flow.Flow
+import org.speak.easy.di.getAppModules
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 import org.koin.dsl.module
