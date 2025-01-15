@@ -10,6 +10,7 @@ kotlin {
             implementation(projects.core.ui)
             implementation(projects.core.designsystem)
             implementation(projects.core.domain)
+            implementation(projects.core.navigation)
             implementation(projects.featureModules.history.historyApi)
             implementation(projects.featureModules.speech.speechApi)
         }

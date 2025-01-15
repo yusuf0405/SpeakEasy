@@ -5,6 +5,6 @@ import org.speak.easy.camera.capture.CameraViewModel
 
 val cameraModule = module {
     single {
-        CameraViewModel(get(), get())
+        CameraViewModel(get(), get(), get())
     }
 }
