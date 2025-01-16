@@ -9,6 +9,7 @@ import androidx.navigation.compose.composable
 import org.koin.compose.koinInject
 import org.speak.easy.core.FeatureApi
 import org.speak.easy.core.navigation.Destination
+import org.speak.easy.core.ui.extensions.TrackScreenViewEvent
 
 object HistoryFeature : FeatureApi {
 
@@ -27,6 +28,7 @@ object HistoryFeature : FeatureApi {
                 uiState = uiState,
                 onAction = viewModel::onAction
             )
+            TrackScreenViewEvent(screenName = "history screen")
         }
     }
 }

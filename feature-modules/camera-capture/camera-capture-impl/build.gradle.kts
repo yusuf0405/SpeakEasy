@@ -19,6 +19,7 @@ kotlin {
             implementation(projects.core.designsystem)
             implementation(projects.core.navigation)
             implementation(projects.core.domain)
+            implementation(projects.core.analytics)
             implementation(projects.core.uiComponents)
             implementation(projects.featureModules.cameraCapture.cameraCaptureApi)
             implementation(projects.featureModules.translator.translatorApi)

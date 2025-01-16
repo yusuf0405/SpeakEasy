@@ -11,6 +11,7 @@ kotlin {
             implementation(projects.core.designsystem)
             implementation(projects.core.navigation)
             implementation(projects.core.domain)
+            implementation(projects.core.analytics)
             implementation(projects.featureModules.settings.settingsApi)
         }
     }

@@ -40,6 +40,7 @@ kotlin {
             implementation(projects.core.domain)
             implementation(projects.core.uiComponents)
             implementation(projects.core.navigation)
+            implementation(projects.core.analytics)
             implementation(projects.featureModules.translator.translatorApi)
             implementation(projects.featureModules.translator.translatorImpl)
             implementation(projects.featureModules.history.historyApi)

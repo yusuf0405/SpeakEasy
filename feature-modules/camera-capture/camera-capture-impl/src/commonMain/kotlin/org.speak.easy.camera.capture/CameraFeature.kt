@@ -15,6 +15,7 @@ import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.koinInject
 import org.speak.easy.core.FeatureApi
 import org.speak.easy.core.navigation.Destination
+import org.speak.easy.core.ui.extensions.TrackScreenViewEvent
 import org.speak.easy.permission.api.PermissionHandler
 import org.speak.easy.permission.api.PermissionHandlerProvider
 import org.speak.easy.permission.api.PermissionType
@@ -49,6 +50,7 @@ object CameraFeature : FeatureApi {
                 onSwapLanguage = viewModel::onSwapLanguage,
                 handleStatus = viewModel::handleStatus
             )
+            TrackScreenViewEvent(screenName = "camera capture screen")
         }
     }
 }

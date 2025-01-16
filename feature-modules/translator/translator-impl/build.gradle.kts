@@ -12,6 +12,7 @@ kotlin {
             implementation(projects.core.domain)
             implementation(projects.core.uiComponents)
             implementation(projects.core.navigation)
+            implementation(projects.core.analytics)
             implementation(projects.featureModules.translator.translatorApi)
             implementation(projects.featureModules.speech.speechApi)
             implementation(projects.featureModules.languages.languagesApi)
