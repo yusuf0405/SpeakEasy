@@ -10,7 +10,6 @@ data class SelectedLanguageData(
     val sourceLanguageCode: String,
 ) {
     companion object {
-
         val unknown = SelectedLanguageData(
             targetLanguage = "",
             sourceLanguage = "",

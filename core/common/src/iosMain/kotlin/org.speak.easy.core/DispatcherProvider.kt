@@ -1,4 +1,3 @@
-
 package org.speak.easy.core
 
 import kotlinx.coroutines.CoroutineDispatcher

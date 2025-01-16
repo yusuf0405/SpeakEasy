@@ -2,11 +2,11 @@ package org.speak.easy.data.repositories
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-import org.speak.easy.data.local.mappers.LanguageHistoryEntityToDataMapper
-import org.speak.easy.data.local.source.LanguageHistoryLocalDataSource
+import org.speak.easy.core.database.source.LanguageHistoryLocalDataSource
 import org.speak.easy.data.mappers.LanguageDataToDomainMapper
 import org.speak.easy.data.mappers.LanguageDataToEntityMapper
 import org.speak.easy.data.mappers.LanguageDomainToDataMapper
+import org.speak.easy.data.mappers.LanguageHistoryEntityToDataMapper
 import org.speak.easy.domain.LanguageHistoryRepository
 import org.speak.easy.domain.models.LanguageDomain
 

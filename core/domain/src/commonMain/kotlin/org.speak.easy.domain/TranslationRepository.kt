@@ -16,11 +16,11 @@ interface TranslationRepository {
 
     suspend fun fetchLanguages(type: LanguageType): List<LanguageDomain>
 
-    suspend fun updateSelectedLanguage(selectedLanguage: SelectedLanguageDomain)
+    suspend fun updateCurrentLanguage(selectedLanguage: SelectedLanguageDomain)
 
-    suspend fun fetchLatestSelectedLanguage(): SelectedLanguageDomain
+    suspend fun fetchCurrentSelectedLanguage(): SelectedLanguageDomain
 
-    fun observeSelectedLanguageData(): Flow<SelectedLanguageDomain>
+    fun observeCurrentLanguageData(): Flow<SelectedLanguageDomain>
 
     suspend fun removeHistoryById(id: Long)
 

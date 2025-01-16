@@ -20,7 +20,6 @@ import org.speak.easy.translator.api.SourceTextManager
 import org.speak.easy.ui.components.models.LanguageUi
 import org.speak.easy.core.ui.models.LanguageWithFlag
 import org.speak.easy.permission.api.PermissionCallback
-import org.speak.easy.permission.api.PermissionHandlerProvider
 import org.speak.easy.permission.api.PermissionStatus
 import org.speak.easy.permission.api.PermissionType
 
@@ -38,7 +37,7 @@ class CameraViewModel(
 
     init {
         translationRepository
-            .observeSelectedLanguageData()
+            .observeCurrentLanguageData()
             .onEach(::updateSelectedLanguage)
             .onError {
                 // TODO: Handle error
@@ -82,7 +81,7 @@ class CameraViewModel(
             sourceLanguageCode = state.targetLanguage.languageCode
         )
         viewModelScope.launchSafe {
-            translationRepository.updateSelectedLanguage(selectedLanguage)
+            translationRepository.updateCurrentLanguage(selectedLanguage)
         }
     }
 

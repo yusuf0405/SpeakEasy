@@ -61,7 +61,7 @@ internal class TranslatorViewModel(
         }
 
         translationRepository
-            .observeSelectedLanguageData()
+            .observeCurrentLanguageData()
             .onEach(::updateSelectedLanguage)
             .onError {
                 // TODO: Handle error
@@ -92,7 +92,7 @@ internal class TranslatorViewModel(
                     val sourceLanguage = languagesModel.sourceLanguages.first()
                     val targetLanguage = languagesModel.targetLanguages[1]
 
-                    translationRepository.updateSelectedLanguage(
+                    translationRepository.updateCurrentLanguage(
                         selectedLanguage = SelectedLanguageDomain(
                             targetLanguage = targetLanguage.name,
                             sourceLanguage = sourceLanguage.name,
@@ -165,7 +165,7 @@ internal class TranslatorViewModel(
                     sourceLanguageCode = state.targetLanguage.languageCode
                 )
                 viewModelScope.launchSafe {
-                    translationRepository.updateSelectedLanguage(selectedLanguage)
+                    translationRepository.updateCurrentLanguage(selectedLanguage)
                 }
             }
 
@@ -196,7 +196,7 @@ internal class TranslatorViewModel(
                     sourceLanguageCode = state.targetLanguage.languageCode
                 )
                 viewModelScope.launchSafe {
-                    translationRepository.updateSelectedLanguage(selectedLanguage)
+                    translationRepository.updateCurrentLanguage(selectedLanguage)
                 }
 
                 doTranslateText()
@@ -213,7 +213,7 @@ internal class TranslatorViewModel(
                     sourceLanguageCode = action.language.languageCode
                 )
                 viewModelScope.launchSafe {
-                    translationRepository.updateSelectedLanguage(selectedLanguage)
+                    translationRepository.updateCurrentLanguage(selectedLanguage)
                 }
                 addLanguageToHistory(action.language)
             }

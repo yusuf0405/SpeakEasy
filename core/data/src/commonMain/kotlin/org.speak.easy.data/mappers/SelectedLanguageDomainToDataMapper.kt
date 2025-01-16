@@ -4,7 +4,7 @@ import org.speak.easy.core.Mapper
 import org.speak.easy.data.models.SelectedLanguageData
 import org.speak.easy.domain.models.SelectedLanguageDomain
 
-internal class SelectedLanguageDomainToDataMapper :
+class SelectedLanguageDomainToDataMapper :
     Mapper<SelectedLanguageDomain, SelectedLanguageData> {
 
     override fun map(from: SelectedLanguageDomain): SelectedLanguageData = from.run {
