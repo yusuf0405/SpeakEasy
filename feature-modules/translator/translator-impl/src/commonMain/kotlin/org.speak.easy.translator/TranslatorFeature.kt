@@ -23,6 +23,7 @@ import org.speak.easy.permission.api.PermissionHandlerProvider
 import org.speak.easy.permission.api.PermissionStatus
 import org.speak.easy.permission.api.PermissionType
 import org.speak.easy.permission.api.RationalPermissionDialogProvider
+import org.speak.easy.permission.api.rememberUrlLauncher
 import speakeasy.core.ui.generated.resources.Res
 import speakeasy.core.ui.generated.resources.close
 import speakeasy.core.ui.generated.resources.go_to_settings
@@ -115,13 +116,15 @@ private fun HandlePermissionRequests(
     setLaunchSettings: (Boolean) -> Unit,
     permissionHandler: PermissionHandler
 ) {
+    val urlLauncher = rememberUrlLauncher()
+
     if (askPermission) {
         permissionHandler.askPermission(PermissionType.RECORD_AUDIO)
         setAskPermission(false)
     }
 
     if (launchSettings) {
-        permissionHandler.launchSettings()
+        urlLauncher.openAppSettings()
         setLaunchSettings(false)
     }
 }

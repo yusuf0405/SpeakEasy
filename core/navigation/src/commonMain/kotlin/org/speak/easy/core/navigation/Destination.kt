@@ -6,7 +6,11 @@ sealed class Destination(val route: String) {
 
     data object CameraGraph : Destination("camera_route")
 
-    data object SettingsGraph : Destination("settings_route")
+    data object SettingsGraph : Destination("settings_graph_route")
 
     data object HistoryGraph : Destination("history_route")
+
+    data object ChangeThemeScreen : Destination("change_theme_route")
+
+    data object SettingsScreen : Destination("settings_screen_route")
 }

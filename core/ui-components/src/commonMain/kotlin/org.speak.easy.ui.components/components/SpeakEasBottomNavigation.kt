@@ -28,9 +28,9 @@ fun SpeakEasBottomNavigation(
         containerColor = SpeakEasyTheme.colors.backgroundModal,
         tonalElevation = MediumElevation
     ) {
-        items.forEachIndexed { _, navigationItem ->
+        items.forEachIndexed { _: Int, navigationItem ->
             NavigationBarItem(
-                selected = currentRoute == navigationItem.route,
+                selected = currentRoute == navigationItem.route || navigationItem.subRouts.contains(currentRoute),
                 onClick = { onItemClick(navigationItem) },
                 icon = {
                     Icon(

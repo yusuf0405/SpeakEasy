@@ -16,10 +16,11 @@ import org.koin.compose.koinInject
 import org.speak.easy.core.FeatureApi
 import org.speak.easy.core.navigation.Destination
 import org.speak.easy.core.ui.extensions.TrackScreenViewEvent
-import org.speak.easy.permission.api.PermissionHandler
 import org.speak.easy.permission.api.PermissionHandlerProvider
 import org.speak.easy.permission.api.PermissionType
 import org.speak.easy.permission.api.RationalPermissionDialogProvider
+import org.speak.easy.permission.api.UrlLauncher
+import org.speak.easy.permission.api.rememberUrlLauncher
 import speakeasy.core.ui.generated.resources.Res
 import speakeasy.core.ui.generated.resources.camera_permission_description
 import speakeasy.core.ui.generated.resources.close
@@ -76,7 +77,7 @@ private fun rememberCameraPermissionState(
 
     return CameraPermissionState(
         isGranted = isPermissionGranted,
-        permissionHandler = permissionHandler,
+        urlLauncher = rememberUrlLauncher(),
         viewModel = viewModel,
         showRationalDialog = showRationalDialog
     )
@@ -91,7 +92,7 @@ private fun HandlePermissionDialogs(
     var launchSettings by remember { mutableStateOf(false) }
 
     if (launchSettings) {
-        state.permissionHandler.launchSettings()
+        state.urlLauncher.openAppSettings()
         launchSettings = false
         viewModel.hideRationalDialog()
     }
@@ -111,7 +112,7 @@ private fun HandlePermissionDialogs(
 
 data class CameraPermissionState(
     val isGranted: Boolean,
-    val permissionHandler: PermissionHandler,
+    val urlLauncher: UrlLauncher,
     val viewModel: CameraViewModel,
     val showRationalDialog: Boolean
 )

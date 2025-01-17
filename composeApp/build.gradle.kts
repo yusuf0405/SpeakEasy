@@ -97,6 +97,9 @@ android {
     buildFeatures {
         compose = true
     }
+    androidResources {
+        generateLocaleConfig = true
+    }
     dependencies {
         debugImplementation(compose.uiTooling)
     }

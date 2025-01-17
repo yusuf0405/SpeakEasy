@@ -30,7 +30,7 @@ class AndroidApp : Application() {
     private fun initPlatformConfiguration() = module {
         single {
             PlatformConfiguration(
-                androidContext = applicationContext,
+                androidContext = INSTANCE,
                 activityContextFlow = activityContextFlow
             )
         }

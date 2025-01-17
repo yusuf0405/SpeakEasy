@@ -6,6 +6,7 @@ import speakeasy.core.ui.generated.resources.history
 import speakeasy.core.ui.generated.resources.main
 import speakeasy.core.ui.generated.resources.mdi_translate
 import speakeasy.core.ui.generated.resources.photo_camera
+import speakeasy.core.ui.generated.resources.settings
 
 actual class BottomNavigationItemsFactory {
     actual fun create(): List<BottomNavigationItem> = listOf(
@@ -24,10 +25,11 @@ actual class BottomNavigationItemsFactory {
             title = Res.string.camera,
             route = Destination.CameraGraph.route
         ),
-//        BottomNavigationItem(
-//            icon = Res.drawable.settings,
-//            title = Res.string.settings,
-//            route = Destination.SettingsGraph.route
-//        )
+        BottomNavigationItem(
+            icon = Res.drawable.settings,
+            title = Res.string.settings,
+            route = Destination.SettingsScreen.route,
+            subRouts = listOf(Destination.ChangeThemeScreen.route)
+        )
     )
 }

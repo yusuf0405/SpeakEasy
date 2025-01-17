@@ -1,0 +1,36 @@
+<resources>
+    <string name="speak_easy">Speak easy</string>
+    <string name="history">История</string>
+    <string name="main">Главный</string>
+    <string name="settings">Настройки</string>
+    <string name="translate">Перевести</string>
+    <string name="translator">Переводчик</string>
+    <string name="enter_the_text">Введите текст...</string>
+    <string name="the_result_of_the_transfer">Результат перевода</string>
+    <string name="default_error_text">Не удалось загрузить данные</string>
+    <string name="recently_used">Недавно использованные</string>
+    <string name="all_languages">Все языки</string>
+    <string name="language">Язык</string>
+    <string name="camera">Камера</string>
+    <string name="error_in_text_recognition">Ошибка при распознавании текста</string>
+    <string name="take_a_photo">Take a photo</string>
+    <string name="permission_must_be_given">Должно быть дано разрешение</string>
+    <string name="camera_permission_description">Чтобы использовать камеру, перейдите в настройки и предоставьте разрешение.</string>
+    <string name="microphone_permission_description">Чтобы использовать микрофон, перейдите в настройки и предоставьте разрешение.</string>
+    <string name="go_to_settings">Перейти в настройки</string>
+    <string name="close">Закрыть</string>
+    <string name="light">Светлое</string>
+    <string name="dark">Темное</string>
+    <string name="system">Системное</string>
+    <string name="change_theme">Изменить тему</string>
+    <string name="current_theme">Текущая тема</string>
+    <string name="more">Еще</string>
+    <string name="change_language_in_app">Измените язык в приложении</string>
+    <string name="dark_theme">Темная тема</string>
+    <string name="apply_dark_theme">Примените темную тему оформления</string>
+    <string name="clear_your_transfer_history">Очистите историю ваших переводов</string>
+    <string name="help_support"> Помощь и Поддержка</string>
+    <string name="about_app">О приложении</string>
+    <string name="en">English</string>
+    <string name="ru">Русский</string>
+</resources>

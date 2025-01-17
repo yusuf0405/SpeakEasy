@@ -5,6 +5,9 @@ plugins {
 
 kotlin {
     sourceSets {
+        androidMain.dependencies {
+            implementation(libs.androidx.appcompat)
+        }
         commonMain.dependencies {
             implementation(libs.lifecycle.viewmodel.compose)
             implementation(libs.navigation.compose)

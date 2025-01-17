@@ -2,6 +2,8 @@ package org.speak.easy.core.datastore
 
 import kotlinx.cinterop.ExperimentalForeignApi
 import org.speak.easy.core.PlatformConfiguration
+import org.speak.easy.core.datastore.preferences.AppPreferencesDataStore
+import org.speak.easy.core.datastore.preferences.DefaultAppPreferencesDataStore
 import platform.Foundation.NSDocumentDirectory
 import platform.Foundation.NSFileManager
 import platform.Foundation.NSURL
@@ -11,7 +13,7 @@ actual class DatastoreFactory actual constructor(platformConfiguration: Platform
 
     @OptIn(ExperimentalForeignApi::class)
     actual fun createSelectedLanguageDataStore(): CurrentLanguageDataStore {
-        return CurrentLanguageDataStoreImpl {
+        return DefaultCurrentLanguageDataStore {
             val documentDirectory: NSURL? = NSFileManager.defaultManager.URLForDirectory(
                 directory = NSDocumentDirectory,
                 inDomain = NSUserDomainMask,
@@ -19,7 +21,21 @@ actual class DatastoreFactory actual constructor(platformConfiguration: Platform
                 create = false,
                 error = null,
             )
-            requireNotNull(documentDirectory).path + "/$dataStoreFileName"
+            requireNotNull(documentDirectory).path + "/$currentLanguageDataStoreFileName"
+        }
+    }
+
+    @OptIn(ExperimentalForeignApi::class)
+    actual fun createAppPreferencesDataStore(): AppPreferencesDataStore {
+        return DefaultAppPreferencesDataStore {
+            val documentDirectory: NSURL? = NSFileManager.defaultManager.URLForDirectory(
+                directory = NSDocumentDirectory,
+                inDomain = NSUserDomainMask,
+                appropriateForURL = null,
+                create = false,
+                error = null,
+            )
+            requireNotNull(documentDirectory).path + "/$appPreferencesDataStoreFileName"
         }
     }
 }

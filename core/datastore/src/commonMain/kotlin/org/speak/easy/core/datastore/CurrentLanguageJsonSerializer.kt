@@ -7,7 +7,7 @@ import okio.BufferedSource
 import okio.use
 import org.speak.easy.core.datastore.models.SelectedLanguageDto
 
-internal object CurrentLanguageDataJsonSerializer : OkioSerializer<SelectedLanguageDto> {
+internal object CurrentLanguageJsonSerializer : OkioSerializer<SelectedLanguageDto> {
     private val json = Json { ignoreUnknownKeys = true }
     override val defaultValue: SelectedLanguageDto = SelectedLanguageDto.unknown
 

@@ -9,12 +9,14 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import org.speak.easy.core.ClipboardCopyManager
 import org.speak.easy.core.TextSharingManager
 import org.speak.easy.core.exstensions.launchSafe
 import org.speak.easy.core.exstensions.onError
+import org.speak.easy.core.exstensions.stateInWhileSubscribed
 import org.speak.easy.domain.LanguageHistoryRepository
 import org.speak.easy.domain.TranslationRepository
 import org.speak.easy.domain.holders.LanguagesHolder
@@ -44,22 +46,22 @@ internal class TranslatorViewModel(
     private val clipboardCopyManager: ClipboardCopyManager,
     private val textSharingManager: TextSharingManager,
     private val sourceTextManager: SourceTextManager,
-    private val languageDomainToUiMapper: LanguageDomainToUiMapper
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(TranslatorScreenUiState.unknown)
-    val uiState: StateFlow<TranslatorScreenUiState> = _uiState.asStateFlow()
+    val uiState: StateFlow<TranslatorScreenUiState> = _uiState.onStart {
+        delay(DEFAULT_DELAY_TIME)
+        languagesHolder.fetchLanguages()
+    }.stateInWhileSubscribed(
+        viewModelScope,
+        TranslatorScreenUiState.unknown
+    )
 
     val sourceText = sourceTextManager
         .sourceText
         .stateIn(viewModelScope, SharingStarted.Lazily, "")
 
     init {
-        viewModelScope.launchSafe {
-            delay(DEFAULT_DELAY_TIME)
-            languagesHolder.fetchLanguages()
-        }
-
         translationRepository
             .observeCurrentLanguageData()
             .onEach(::updateSelectedLanguage)

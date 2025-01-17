@@ -9,6 +9,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -20,6 +21,7 @@ import org.koin.compose.KoinContext
 import org.koin.compose.koinInject
 import org.speak.easy.core.FeatureApi
 import org.speak.easy.core.designsystem.SpeakEasyTheme
+import org.speak.easy.core.designsystem.ThemeType
 import org.speak.easy.core.navigation.BottomNavigationItem
 import org.speak.easy.core.navigation.Destination
 import org.speak.easy.core.navigation.NavigationAction
@@ -28,18 +30,28 @@ import org.speak.easy.core.navigation.di.BOTTOM_NAVIGATION_ITEMS
 import org.speak.easy.core.ui.ObserveAsEvents
 import org.speak.easy.core.ui.SpeakEasyTopBar
 import org.speak.easy.di.FEATURE_API_MODULES
+import org.speak.easy.domain.models.ThemeType as Theme
 import org.speak.easy.ui.components.components.SpeakEasBottomNavigation
 import speakeasy.core.ui.generated.resources.Res
+import speakeasy.core.ui.generated.resources.change_theme
 import speakeasy.core.ui.generated.resources.history
 import speakeasy.core.ui.generated.resources.settings
 import speakeasy.core.ui.generated.resources.translator
 
 @Composable
-fun App(
+fun Application(
     navController: NavHostController = rememberNavController(),
     modifier: Modifier = Modifier
 ) {
-    SpeakEasyTheme {
+    val viewModel = koinInject<ApplicationViewModel>()
+    val theme by viewModel.themeState.collectAsStateWithLifecycle()
+    SpeakEasyTheme(
+        theme = when (theme) {
+            Theme.DARK -> ThemeType.DARK
+            Theme.LIGHT -> ThemeType.LIGHT
+            Theme.SYSTEM -> ThemeType.SYSTEM
+        }
+    ) {
         KoinContext {
             val featureSet: List<FeatureApi> = koinInject(FEATURE_API_MODULES)
             val bottomNavigationItemsList: List<BottomNavigationItem> =
@@ -110,7 +122,8 @@ private fun NavHostController.topBarTitle(): StringResource? {
         when (navBackStackEntry?.destination?.route) {
             Destination.TranslatorGraph.route -> Res.string.translator
             Destination.HistoryGraph.route -> Res.string.history
-            Destination.SettingsGraph.route -> Res.string.settings
+            Destination.SettingsScreen.route -> Res.string.settings
+            Destination.ChangeThemeScreen.route -> Res.string.change_theme
             else -> null
         }
     }

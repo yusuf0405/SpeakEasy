@@ -5,7 +5,9 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
 inline fun CoroutineScope.launchSafe(
@@ -24,3 +26,12 @@ inline fun CoroutineScope.launchSafe(
 }
 
 inline fun <T> Flow<T>.onError(crossinline action: (Throwable) -> Unit) = this.catch { action(it) }
+
+inline fun <T> Flow<T>.stateInWhileSubscribed(
+    scope: CoroutineScope,
+    initialValue: T
+) = this.stateIn(
+    scope,
+    SharingStarted.WhileSubscribed(stopTimeoutMillis = 5000L),
+    initialValue
+)

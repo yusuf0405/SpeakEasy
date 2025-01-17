@@ -8,7 +8,7 @@ import org.speak.easy.translator.api.SourceTextManager
 val translatorModule = module {
     single {
         TranslatorViewModel(
-            get(), get(), get(), get(), get(), get(), get(), get(), get()
+            get(), get(), get(), get(), get(), get(), get(), get()
         )
     }
     single<SourceTextManager> { SourceTextManagerImpl() }

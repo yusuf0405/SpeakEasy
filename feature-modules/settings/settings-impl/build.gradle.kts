@@ -13,6 +13,7 @@ kotlin {
             implementation(projects.core.domain)
             implementation(projects.core.analytics)
             implementation(projects.featureModules.settings.settingsApi)
+            implementation(projects.featureModules.permission.permissionApi)
         }
     }
 }

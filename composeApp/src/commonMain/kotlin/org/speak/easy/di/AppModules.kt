@@ -4,6 +4,7 @@ import org.koin.core.module.Module
 import org.koin.core.qualifier.StringQualifier
 import org.koin.core.qualifier.qualifier
 import org.koin.dsl.module
+import org.speak.easy.ApplicationViewModel
 import org.speak.easy.camera.capture.CameraFeature
 import org.speak.easy.camera.capture.di.cameraModule
 import org.speak.easy.core.ClipboardCopyManager
@@ -19,6 +20,7 @@ import org.speak.easy.languages.di.languagesModule
 import org.speak.easy.core.navigation.di.navigationModule
 import org.speak.easy.permission.di.permissionsModule
 import org.speak.easy.settings.SettingsFeature
+import org.speak.easy.settings.di.settingsModule
 import org.speak.easy.speech.speechFeatureModule
 import org.speak.easy.translator.TranslatorFeature
 import org.speak.easy.translator.di.translatorModule
@@ -37,7 +39,8 @@ fun getAppModules(): List<Module> = listOf(
     uiComponentsModule,
     languagesModule,
     cameraModule,
-    permissionsModule
+    permissionsModule,
+    settingsModule,
 )
 
 private val coreModule = module {
@@ -54,5 +57,6 @@ private val featureApiModule = module {
             CameraFeature,
         )
     }
+    single<ApplicationViewModel> { ApplicationViewModel(get()) }
     single<LanguageFeatureApi> { LanguageFeature }
 }

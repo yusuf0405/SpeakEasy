@@ -159,20 +159,4 @@ actual class PermissionsManager actual constructor(private val callback: Permiss
             }
         }
     }
-
-    @Composable
-    override fun launchSettings() {
-        val settingsUrl = NSURL.URLWithString(UIApplicationOpenSettingsURLString)
-        if (settingsUrl != null) {
-            UIApplication.sharedApplication.openURL(
-                settingsUrl,
-                mapOf<Any?, Any?>(),
-                completionHandler = { success ->
-                    println("Settings opened: $success")
-                }
-            )
-        } else {
-            println("Invalid settings URL")
-        }
-    }
 }

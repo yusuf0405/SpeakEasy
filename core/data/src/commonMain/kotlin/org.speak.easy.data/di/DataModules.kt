@@ -13,12 +13,17 @@ import org.speak.easy.core.database.source.TranslationHistoryLocalDataSource
 import org.speak.easy.core.database.source.TranslationHistoryLocalDataSourceImpl
 import org.speak.easy.core.datastore.DatastoreFactory
 import org.speak.easy.core.datastore.CurrentLanguageDataStore
+import org.speak.easy.core.datastore.preferences.AppPreferencesDataStore
 import org.speak.easy.core.network.di.networkModule
 import org.speak.easy.core.network.service.DeeplCloudService
 import org.speak.easy.core.network.service.DeeplCloudServiceImpl
 import org.speak.easy.core.network.source.TranslatorCloudDataSource
 import org.speak.easy.core.network.source.TranslatorCloudDataSourceImpl
 import org.speak.easy.core.provideDispatcher
+import org.speak.easy.data.mappers.AppPreferencesDataDomainToMapper
+import org.speak.easy.data.mappers.AppPreferencesDataToDtoMapper
+import org.speak.easy.data.mappers.AppPreferencesDtoToDataMapper
+import org.speak.easy.data.mappers.AppPreferencesToDataMapper
 import org.speak.easy.data.mappers.LanguageCloudToDataMapper
 import org.speak.easy.data.mappers.LanguageDataToDomainMapper
 import org.speak.easy.data.mappers.LanguageDataToEntityMapper
@@ -41,10 +46,12 @@ import org.speak.easy.data.repositories.DefaultTranslationService
 import org.speak.easy.data.repositories.LanguageHistoryRepositoryImpl
 import org.speak.easy.data.repositories.LanguageService
 import org.speak.easy.data.repositories.CurrentLanguageManager
+import org.speak.easy.data.repositories.PreferencesRepositoryImpl
 import org.speak.easy.data.repositories.TranslationHistoryManager
 import org.speak.easy.data.repositories.TranslationRepositoryImpl
 import org.speak.easy.data.repositories.TranslationService
 import org.speak.easy.domain.LanguageHistoryRepository
+import org.speak.easy.domain.PreferencesRepository
 import org.speak.easy.domain.TranslationRepository
 
 
@@ -77,6 +84,9 @@ private val dataModule = module {
     single<TranslationRepository> {
         TranslationRepositoryImpl(get(), get(), get(), get())
     }
+    single<PreferencesRepository> {
+        PreferencesRepositoryImpl(get(), get(), get(), get(), get(), get())
+    }
 }
 
 internal val databaseModule = module {
@@ -84,6 +94,7 @@ internal val databaseModule = module {
     single { DatastoreFactory(get()) }
     single<TranslationHistoryDatabase> { get<DatabaseFactory>().createRoomDatabase() }
     single<CurrentLanguageDataStore> { get<DatastoreFactory>().createSelectedLanguageDataStore() }
+    single<AppPreferencesDataStore> { get<DatastoreFactory>().createAppPreferencesDataStore() }
     single<TranslationHistoryDao> { get<TranslationHistoryDatabase>().getTranslationHistoryDao() }
     single<LanguageHistoryDao> { get<TranslationHistoryDatabase>().getLanguageHistoryDao() }
     single<TranslationHistoryLocalDataSource> {
@@ -110,4 +121,8 @@ private val mappersModule = module {
     factory { LanguageDataToEntityMapper() }
     factory { SelectedLanguageDtoToDataMapper() }
     factory { SelectedLanguageDataToDtoMapper() }
+    factory { AppPreferencesDataToDtoMapper() }
+    factory { AppPreferencesDtoToDataMapper() }
+    factory { AppPreferencesToDataMapper() }
+    factory { AppPreferencesDataDomainToMapper() }
 }

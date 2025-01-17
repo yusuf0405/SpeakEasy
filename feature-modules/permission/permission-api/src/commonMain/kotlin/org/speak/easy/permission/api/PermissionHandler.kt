@@ -8,7 +8,4 @@ interface PermissionHandler {
 
     @Composable
     fun isPermissionGranted(permission: PermissionType): Boolean
-
-    @Composable
-    fun launchSettings()
 }

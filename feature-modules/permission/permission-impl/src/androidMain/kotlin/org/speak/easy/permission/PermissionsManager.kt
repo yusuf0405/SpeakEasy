@@ -111,17 +111,6 @@ actual class PermissionsManager actual constructor(
         }
     }
 
-    @Composable
-    override fun launchSettings() {
-        val context = LocalContext.current
-        Intent(
-            Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
-            Uri.fromParts("package", context.packageName, null)
-        ).also {
-            context.startActivity(it)
-        }
-    }
-
     @OptIn(ExperimentalPermissionsApi::class)
     @Composable
     private fun cameraPermissionState(): MultiplePermissionsState {

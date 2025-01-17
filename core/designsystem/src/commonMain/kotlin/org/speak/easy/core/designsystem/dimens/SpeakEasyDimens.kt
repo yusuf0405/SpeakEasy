@@ -17,6 +17,7 @@ class SpeakEasyDimens(
     val dp11: Dp = 11.dp,
     val dp12: Dp = 12.dp,
     val dp14: Dp = 14.dp,
+    val dp15: Dp = 15.dp,
     val dp16: Dp = 16.dp,
     val dp18: Dp = 18.dp,
     val dp20: Dp = 20.dp,

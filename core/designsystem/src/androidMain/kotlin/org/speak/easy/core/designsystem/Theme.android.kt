@@ -8,7 +8,7 @@ import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
 
 @Composable
-internal actual fun SystemAppearance(isDark: Boolean) {
+internal actual fun SystemAppearance(isDarkTheme: Boolean) {
     val view = LocalView.current
     val systemBarColor = SpeakEasyTheme.colors.backgroundModal.toArgb()
 
@@ -19,8 +19,8 @@ internal actual fun SystemAppearance(isDark: Boolean) {
             window.statusBarColor = systemBarColor
             window.navigationBarColor = systemBarColor
             WindowCompat.getInsetsController(window, window.decorView).apply {
-                isAppearanceLightStatusBars = isDark
-                isAppearanceLightNavigationBars = isDark
+                isAppearanceLightStatusBars = !isDarkTheme
+                isAppearanceLightNavigationBars = !isDarkTheme
             }
         }
     }
