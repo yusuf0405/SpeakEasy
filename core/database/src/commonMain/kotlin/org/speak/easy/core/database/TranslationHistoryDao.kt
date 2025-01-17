@@ -1,4 +1,4 @@
-package org.speak.easy.core.database.database
+package org.speak.easy.core.database
 
 import androidx.room.Dao
 import androidx.room.Delete

@@ -9,6 +9,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
@@ -16,6 +17,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import org.jetbrains.compose.resources.StringResource
+import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.KoinContext
 import org.koin.compose.koinInject
@@ -30,13 +32,17 @@ import org.speak.easy.core.navigation.di.BOTTOM_NAVIGATION_ITEMS
 import org.speak.easy.core.ui.ObserveAsEvents
 import org.speak.easy.core.ui.SpeakEasyTopBar
 import org.speak.easy.di.FEATURE_API_MODULES
-import org.speak.easy.domain.models.ThemeType as Theme
 import org.speak.easy.ui.components.components.SpeakEasBottomNavigation
 import speakeasy.core.ui.generated.resources.Res
+import speakeasy.core.ui.generated.resources.arrow_left
+import speakeasy.core.ui.generated.resources.arrow_right
 import speakeasy.core.ui.generated.resources.change_theme
 import speakeasy.core.ui.generated.resources.history
 import speakeasy.core.ui.generated.resources.settings
 import speakeasy.core.ui.generated.resources.translator
+import org.speak.easy.domain.models.ThemeType as Theme
+
+typealias CurrentRoute = String
 
 @Composable
 fun Application(
@@ -65,6 +71,7 @@ fun Application(
                 topBarTitle = topBarTitle,
                 bottomNavigationItemsList = bottomNavigationItemsList,
                 currentRoute = currentRoute,
+                navController = navController,
                 onBottomNavItemClick = { route ->
                     navController.navigateSafely(route.route)
                 }
@@ -85,7 +92,8 @@ fun Application(
 private fun AppScaffold(
     topBarTitle: StringResource?,
     bottomNavigationItemsList: List<BottomNavigationItem>,
-    currentRoute: String?,
+    currentRoute: CurrentRoute?,
+    navController: NavHostController,
     onBottomNavItemClick: (BottomNavigationItem) -> Unit,
     content: @Composable (PaddingValues) -> Unit
 ) {
@@ -94,7 +102,9 @@ private fun AppScaffold(
             if (topBarTitle != null) {
                 SpeakEasyTopBar(
                     title = stringResource(topBarTitle),
-                    contentAlignment = Alignment.Center
+                    contentAlignment = Alignment.Center,
+                    startIcon = currentRoute?.getStartIcon(),
+                    onStartClick = navController::navigateUp
                 )
             }
         },
@@ -107,26 +117,6 @@ private fun AppScaffold(
         },
         content = content
     )
-}
-
-@Composable
-private fun NavHostController.currentRoute(): String? {
-    val navBackStackEntry by currentBackStackEntryAsState()
-    return remember(navBackStackEntry) { navBackStackEntry?.destination?.route }
-}
-
-@Composable
-private fun NavHostController.topBarTitle(): StringResource? {
-    val navBackStackEntry by currentBackStackEntryAsState()
-    return remember(navBackStackEntry) {
-        when (navBackStackEntry?.destination?.route) {
-            Destination.TranslatorGraph.route -> Res.string.translator
-            Destination.HistoryGraph.route -> Res.string.history
-            Destination.SettingsScreen.route -> Res.string.settings
-            Destination.ChangeThemeScreen.route -> Res.string.change_theme
-            else -> null
-        }
-    }
 }
 
 @Composable
@@ -164,6 +154,34 @@ private fun AppNavHost(
                 navController = navController,
                 navGraphBuilder = this
             )
+        }
+    }
+}
+
+@Composable
+private fun NavHostController.currentRoute(): CurrentRoute? {
+    val navBackStackEntry by currentBackStackEntryAsState()
+    return remember(navBackStackEntry) { navBackStackEntry?.destination?.route }
+}
+
+@Composable
+private fun CurrentRoute.getStartIcon(): Painter? {
+    return when (this) {
+        Destination.ChangeThemeScreen.route -> painterResource(Res.drawable.arrow_right)
+        else -> null
+    }
+}
+
+@Composable
+private fun NavHostController.topBarTitle(): StringResource? {
+    val navBackStackEntry by currentBackStackEntryAsState()
+    return remember(navBackStackEntry) {
+        when (navBackStackEntry?.destination?.route) {
+            Destination.TranslatorGraph.route -> Res.string.translator
+            Destination.HistoryGraph.route -> Res.string.history
+            Destination.SettingsScreen.route -> Res.string.settings
+            Destination.ChangeThemeScreen.route -> Res.string.change_theme
+            else -> null
         }
     }
 }

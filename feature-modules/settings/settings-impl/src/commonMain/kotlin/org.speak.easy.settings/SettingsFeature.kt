@@ -18,12 +18,17 @@ import org.speak.easy.core.designsystem.SpeakEasyTheme
 import org.speak.easy.core.navigation.Destination
 import org.speak.easy.core.ui.extensions.SpacerHeight
 import org.speak.easy.core.ui.extensions.TrackScreenViewEvent
+import org.speak.easy.permission.api.RationalPermissionDialogProvider
 import org.speak.easy.permission.api.rememberUrlLauncher
 import org.speak.easy.settings.category.CategoriesList
 import org.speak.easy.settings.theme.ThemeScreen
 import org.speak.easy.settings.theme.ThemeViewModel
 import speakeasy.core.ui.generated.resources.Res
+import speakeasy.core.ui.generated.resources.are_you_really_sure_clear_your_transfer_history
+import speakeasy.core.ui.generated.resources.cancel
+import speakeasy.core.ui.generated.resources.clear_history_of_all_transfers
 import speakeasy.core.ui.generated.resources.more
+import speakeasy.core.ui.generated.resources.remove
 
 object SettingsFeature : FeatureApi {
 
@@ -37,15 +42,33 @@ object SettingsFeature : FeatureApi {
         ) {
 
             val viewModel = koinInject<SettingsViewModel>()
+            val rationalPermissionDialogProvider = koinInject<RationalPermissionDialogProvider>()
 
             val urlLauncher = rememberUrlLauncher()
             val uiState by viewModel.uiState.collectAsStateWithLifecycle()
             val launchSetting by viewModel.launchSetting.collectAsStateWithLifecycle(false)
+            val launchClearHistory by viewModel.launchClearHistory.collectAsStateWithLifecycle(false)
 
             if (launchSetting) {
-                println("openAppSettings")
                 urlLauncher.openAppSettings()
                 viewModel.settingsShowed()
+            }
+
+            if (launchClearHistory) {
+                rationalPermissionDialogProvider.get(
+                    modifier = Modifier,
+                    title = stringResource(Res.string.clear_history_of_all_transfers),
+                    description = stringResource(Res.string.are_you_really_sure_clear_your_transfer_history),
+                    confirmText = stringResource(Res.string.remove),
+                    dismissText = stringResource(Res.string.cancel),
+                    onDismiss = {
+                        viewModel.dismissClearHistoryPopup()
+                    },
+                    onConfirm = {
+                        viewModel.clearHistory()
+                        viewModel.dismissClearHistoryPopup()
+                    }
+                )
             }
 
             Column(

@@ -4,9 +4,9 @@ import org.koin.core.module.Module
 import org.koin.dsl.module
 import org.speak.easy.core.DispatcherProvider
 import org.speak.easy.core.database.DatabaseFactory
-import org.speak.easy.core.database.database.LanguageHistoryDao
-import org.speak.easy.core.database.database.TranslationHistoryDao
-import org.speak.easy.core.database.database.TranslationHistoryDatabase
+import org.speak.easy.core.database.LanguageHistoryDao
+import org.speak.easy.core.database.TranslationHistoryDao
+import org.speak.easy.core.database.TranslationHistoryDatabase
 import org.speak.easy.core.database.source.LanguageHistoryLocalDataSource
 import org.speak.easy.core.database.source.LanguageHistoryLocalDataSourceImpl
 import org.speak.easy.core.database.source.TranslationHistoryLocalDataSource

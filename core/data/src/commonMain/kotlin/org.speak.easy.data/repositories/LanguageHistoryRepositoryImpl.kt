@@ -24,6 +24,10 @@ internal class LanguageHistoryRepositoryImpl(
             .map { it.map(languageDataToDomainMapper::map) }
     }
 
+    override suspend fun clearHistory() {
+        return languageHistoryLocalDataSource.clearHistory()
+    }
+
     override suspend fun addLanguage(language: LanguageDomain) {
         languageDataToEntityMapper.map(languageDomainToDataMapper.map(language)).apply {
             languageHistoryLocalDataSource.insertOrUpdate(this)

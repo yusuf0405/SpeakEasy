@@ -1,4 +1,4 @@
-package org.speak.easy.core.database.database
+package org.speak.easy.core.database
 
 import androidx.room.ConstructedBy
 import androidx.room.Database
@@ -14,7 +14,7 @@ internal const val dataBaseFileName = "speak-easy.db"
         TranslationHistoryEntity::class,
         LanguageHistoryEntity::class,
     ],
-    version = 2
+    version = 1
 )
 @ConstructedBy(TranslationDatabaseConstructor::class)
 abstract class TranslationHistoryDatabase : RoomDatabase() {

@@ -14,17 +14,22 @@ import org.speak.easy.core.exstensions.launchSafe
 import org.speak.easy.core.exstensions.stateInWhileSubscribed
 import org.speak.easy.core.navigation.Destination
 import org.speak.easy.core.navigation.Navigator
+import org.speak.easy.domain.usecases.ClearHistoryUseCase
 import org.speak.easy.settings.category.CategoryFactory
 import org.speak.easy.settings.category.CategoryType
 
 class SettingsViewModel(
     private val categoryFactory: CategoryFactory,
     private val dispatcherProvider: DispatcherProvider,
+    private val clearHistoryUseCase: ClearHistoryUseCase,
     private val navigator: Navigator
 ) : ViewModel() {
 
     private val _launchSetting = MutableSharedFlow<Boolean>()
     val launchSetting: SharedFlow<Boolean> = _launchSetting.asSharedFlow()
+
+    private val _launchClearHistory = MutableSharedFlow<Boolean>()
+    val launchClearHistory: SharedFlow<Boolean> = _launchClearHistory.asSharedFlow()
 
     private val _uiState: MutableStateFlow<SettingsUiState> =
         MutableStateFlow(SettingsUiState.default)
@@ -46,15 +51,33 @@ class SettingsViewModel(
         when (type) {
             CategoryType.LANGUAGE -> showSettings()
             CategoryType.THEME -> navigateToChangeThemeScreen()
-            CategoryType.CLEAN_HISTORY -> {}
+            CategoryType.CLEAN_HISTORY -> showClearHistoryPopup()
             CategoryType.HELP_SUPPORT -> {}
             CategoryType.ABOUT_APP -> {}
+        }
+    }
+
+    fun clearHistory() {
+        viewModelScope.launchSafe {
+            clearHistoryUseCase.clear()
         }
     }
 
     private fun navigateToChangeThemeScreen() {
         viewModelScope.launchSafe {
             navigator.navigate(Destination.ChangeThemeScreen)
+        }
+    }
+
+    private fun showClearHistoryPopup() {
+        viewModelScope.launchSafe {
+            _launchClearHistory.emit(true)
+        }
+    }
+
+    fun dismissClearHistoryPopup() {
+        viewModelScope.launchSafe {
+            _launchClearHistory.emit(false)
         }
     }
 

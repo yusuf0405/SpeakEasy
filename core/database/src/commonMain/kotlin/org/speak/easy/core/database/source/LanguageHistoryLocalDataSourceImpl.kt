@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.withContext
 import okio.IOException
 import org.speak.easy.core.DispatcherProvider
-import org.speak.easy.core.database.database.LanguageHistoryDao
+import org.speak.easy.core.database.LanguageHistoryDao
 import org.speak.easy.core.database.models.LanguageHistoryEntity
 
 class LanguageHistoryLocalDataSourceImpl(

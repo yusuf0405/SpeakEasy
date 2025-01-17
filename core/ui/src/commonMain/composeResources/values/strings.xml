@@ -33,4 +33,8 @@
     <string name="about_app">About App</string>
     <string name="en">English</string>
     <string name="ru">Русский</string>
+    <string name="clear_history_of_all_transfers">Clear the history of all transfers</string>
+    <string name="are_you_really_sure_clear_your_transfer_history">Are you really sure to clear your transfer history?</string>
+    <string name="remove">Remove</string>
+    <string name="cancel">Cancel</string>
 </resources>

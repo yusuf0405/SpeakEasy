@@ -33,4 +33,8 @@
     <string name="about_app">О приложении</string>
     <string name="en">English</string>
     <string name="ru">Русский</string>
+    <string name="clear_history_of_all_transfers">Очистить историю всех переводов</string>
+    <string name="are_you_really_sure_clear_your_transfer_history">Вы действительно уверены, что очистили историю своих переводов?</string>
+    <string name="remove">Удалить</string>
+    <string name="cancel">Отмена</string>
 </resources>

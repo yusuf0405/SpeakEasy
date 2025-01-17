@@ -6,8 +6,6 @@ import kotlinx.cinterop.ExperimentalForeignApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import org.speak.easy.core.PlatformConfiguration
-import org.speak.easy.core.database.database.TranslationHistoryDatabase
-import org.speak.easy.core.database.database.dataBaseFileName
 import platform.Foundation.NSDocumentDirectory
 import platform.Foundation.NSFileManager
 import platform.Foundation.NSURL
