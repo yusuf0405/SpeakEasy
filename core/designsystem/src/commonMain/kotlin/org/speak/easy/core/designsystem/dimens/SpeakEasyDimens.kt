@@ -23,6 +23,7 @@ class SpeakEasyDimens(
     val dp20: Dp = 20.dp,
     val dp22: Dp = 22.dp,
     val dp24: Dp = 24.dp,
+    val dp25: Dp = 25.dp,
     val dp26: Dp = 26.dp,
     val dp28: Dp = 28.dp,
     val dp30: Dp = 30.dp,

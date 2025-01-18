@@ -34,7 +34,7 @@ import org.speak.easy.core.ui.SpeakEasyTopBar
 import org.speak.easy.di.FEATURE_API_MODULES
 import org.speak.easy.ui.components.components.SpeakEasBottomNavigation
 import speakeasy.core.ui.generated.resources.Res
-import speakeasy.core.ui.generated.resources.arrow_left
+import speakeasy.core.ui.generated.resources.about_app
 import speakeasy.core.ui.generated.resources.arrow_right
 import speakeasy.core.ui.generated.resources.change_theme
 import speakeasy.core.ui.generated.resources.history
@@ -168,6 +168,7 @@ private fun NavHostController.currentRoute(): CurrentRoute? {
 private fun CurrentRoute.getStartIcon(): Painter? {
     return when (this) {
         Destination.ChangeThemeScreen.route -> painterResource(Res.drawable.arrow_right)
+        Destination.AboutAppScreen.route -> painterResource(Res.drawable.arrow_right)
         else -> null
     }
 }
@@ -181,6 +182,7 @@ private fun NavHostController.topBarTitle(): StringResource? {
             Destination.HistoryGraph.route -> Res.string.history
             Destination.SettingsScreen.route -> Res.string.settings
             Destination.ChangeThemeScreen.route -> Res.string.change_theme
+            Destination.AboutAppScreen.route -> Res.string.about_app
             else -> null
         }
     }

@@ -1,5 +1,6 @@
 <resources>
     <string name="speak_easy">Speak easy</string>
+    <string name="app_description">This application is a young project being developed by a single developer. It is designed for convenient and fast text translation into different languages. Work on improving functionality and stability continues, and new features will appear in the future. I will be glad to hear your feedback and suggestions! 🚀</string>
     <string name="history">History</string>
     <string name="main">Main</string>
     <string name="settings">Settings</string>
@@ -37,4 +38,7 @@
     <string name="are_you_really_sure_clear_your_transfer_history">Are you really sure to clear your transfer history?</string>
     <string name="remove">Remove</string>
     <string name="cancel">Cancel</string>
+    <string name="version">Version</string>
+    <string name="telegram">Telegram</string>
+    <string name="email">Email</string>
 </resources>

@@ -12,5 +12,7 @@ sealed class Destination(val route: String) {
 
     data object ChangeThemeScreen : Destination("change_theme_route")
 
+    data object AboutAppScreen : Destination("about_app_route")
+
     data object SettingsScreen : Destination("settings_screen_route")
 }

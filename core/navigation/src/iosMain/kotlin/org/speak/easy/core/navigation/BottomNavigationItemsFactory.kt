@@ -22,7 +22,10 @@ actual class BottomNavigationItemsFactory {
             icon = Res.drawable.settings,
             title = Res.string.settings,
             route = Destination.SettingsScreen.route,
-            subRouts = listOf(Destination.ChangeThemeScreen.route)
+            subRouts = listOf(
+                Destination.ChangeThemeScreen.route,
+                Destination.AboutAppScreen.route
+            )
         )
     )
 }

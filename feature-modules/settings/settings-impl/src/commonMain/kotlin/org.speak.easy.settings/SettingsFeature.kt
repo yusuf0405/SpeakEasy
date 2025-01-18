@@ -20,6 +20,8 @@ import org.speak.easy.core.ui.extensions.SpacerHeight
 import org.speak.easy.core.ui.extensions.TrackScreenViewEvent
 import org.speak.easy.permission.api.RationalPermissionDialogProvider
 import org.speak.easy.permission.api.rememberUrlLauncher
+import org.speak.easy.settings.about.app.AboutAppScreen
+import org.speak.easy.settings.about.app.AboutAppViewModel
 import org.speak.easy.settings.category.CategoriesList
 import org.speak.easy.settings.theme.ThemeScreen
 import org.speak.easy.settings.theme.ThemeViewModel
@@ -108,6 +110,19 @@ object SettingsFeature : FeatureApi {
                 ThemeScreen(
                     currentTheme = theme,
                     onThemeChange = viewModel::changeTheme
+                )
+            }
+
+            navGraphBuilder.composable(
+                route = Destination.AboutAppScreen.route,
+            ) {
+                val viewModel = koinInject<AboutAppViewModel>()
+                val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+
+                AboutAppScreen(
+                    uiState = uiState,
+                    openEmail = viewModel::openEmail,
+                    openTelegram = viewModel::openTelegram
                 )
             }
         }

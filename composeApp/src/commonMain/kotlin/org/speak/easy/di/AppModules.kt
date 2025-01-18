@@ -7,8 +7,10 @@ import org.koin.dsl.module
 import org.speak.easy.ApplicationViewModel
 import org.speak.easy.camera.capture.CameraFeature
 import org.speak.easy.camera.capture.di.cameraModule
+import org.speak.easy.core.AppLauncher
 import org.speak.easy.core.ClipboardCopyManager
 import org.speak.easy.core.TextSharingManager
+import org.speak.easy.core.VersionInfo
 import org.speak.easy.core.provideClipboardUpdateManager
 import org.speak.easy.core.provideTextShareManager
 import org.speak.easy.domain.di.domainModule
@@ -46,6 +48,8 @@ fun getAppModules(): List<Module> = listOf(
 private val coreModule = module {
     factory<TextSharingManager> { provideTextShareManager(get()) }
     factory<ClipboardCopyManager> { provideClipboardUpdateManager(get()) }
+    single<VersionInfo> { VersionInfo(get()) }
+    single<AppLauncher> { AppLauncher(get()) }
 }
 
 private val featureApiModule = module {

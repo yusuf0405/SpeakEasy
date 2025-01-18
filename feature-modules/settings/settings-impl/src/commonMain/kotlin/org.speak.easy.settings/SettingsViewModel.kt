@@ -53,7 +53,7 @@ class SettingsViewModel(
             CategoryType.THEME -> navigateToChangeThemeScreen()
             CategoryType.CLEAN_HISTORY -> showClearHistoryPopup()
             CategoryType.HELP_SUPPORT -> {}
-            CategoryType.ABOUT_APP -> {}
+            CategoryType.ABOUT_APP -> navigateToAboutAppScreen()
         }
     }
 
@@ -66,6 +66,12 @@ class SettingsViewModel(
     private fun navigateToChangeThemeScreen() {
         viewModelScope.launchSafe {
             navigator.navigate(Destination.ChangeThemeScreen)
+        }
+    }
+
+    private fun navigateToAboutAppScreen() {
+        viewModelScope.launchSafe {
+            navigator.navigate(Destination.AboutAppScreen)
         }
     }
 
