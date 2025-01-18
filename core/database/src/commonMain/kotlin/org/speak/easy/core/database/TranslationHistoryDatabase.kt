@@ -7,7 +7,7 @@ import androidx.room.RoomDatabaseConstructor
 import org.speak.easy.core.database.models.LanguageHistoryEntity
 import org.speak.easy.core.database.models.TranslationHistoryEntity
 
-internal const val dataBaseFileName = "speak-easy.db"
+internal const val dataBaseFileName = "speak-app-easy.db"
 
 @Database(
     entities = [
