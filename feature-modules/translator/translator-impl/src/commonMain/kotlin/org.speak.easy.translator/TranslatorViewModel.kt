@@ -194,8 +194,8 @@ internal class TranslatorViewModel(
                 val selectedLanguage = SelectedLanguageDomain(
                     targetLanguage = action.language.name,
                     targetLanguageCode = action.language.languageCode,
-                    sourceLanguage = state.targetLanguage.name,
-                    sourceLanguageCode = state.targetLanguage.languageCode
+                    sourceLanguage = state.sourceLanguage.name,
+                    sourceLanguageCode = state.sourceLanguage.languageCode
                 )
                 viewModelScope.launchSafe {
                     translationRepository.updateCurrentLanguage(selectedLanguage)
