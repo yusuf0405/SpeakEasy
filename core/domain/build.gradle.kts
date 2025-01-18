@@ -13,7 +13,6 @@ kotlin {
             implementation(libs.ktor.serialization)
             implementation(libs.ktor.content.negotiation)
             implementation(libs.kotlinx.datetime)
-            implementation(libs.napier)
             implementation(libs.paging.compose.common)
             implementation(libs.paging.common)
             api(libs.koin.core)

@@ -29,7 +29,6 @@ class DefaultAppPreferencesDataStore(
     )
 
     override suspend fun setPreferences(preferences: AppPreferencesDto) {
-        println("setPreferences $preferences")
         dataStore.updateData { preferences }
     }
 

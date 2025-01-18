@@ -41,4 +41,6 @@
     <string name="version">Версия</string>
     <string name="telegram">Telegram</string>
     <string name="email">Электронная почта</string>
+    <string name="rate_app">Оценить приложение</string>
+    <string name="rate_app_description">Если вам нравится использовать Speak Easy, не могли бы вы уделить минутку, чтобы оценить его? Это займет не более 30 секунд. Спасибо за вашу поддержку!</string>
 </resources>

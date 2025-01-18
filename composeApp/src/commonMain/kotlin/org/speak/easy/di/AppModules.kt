@@ -8,6 +8,7 @@ import org.speak.easy.ApplicationViewModel
 import org.speak.easy.camera.capture.CameraFeature
 import org.speak.easy.camera.capture.di.cameraModule
 import org.speak.easy.core.AppLauncher
+import org.speak.easy.core.AppRater
 import org.speak.easy.core.ClipboardCopyManager
 import org.speak.easy.core.TextSharingManager
 import org.speak.easy.core.VersionInfo
@@ -50,6 +51,7 @@ private val coreModule = module {
     factory<ClipboardCopyManager> { provideClipboardUpdateManager(get()) }
     single<VersionInfo> { VersionInfo(get()) }
     single<AppLauncher> { AppLauncher(get()) }
+    single<AppRater> { AppRater(get()) }
 }
 
 private val featureApiModule = module {

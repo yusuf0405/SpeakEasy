@@ -11,7 +11,6 @@ kotlin {
             implementation(libs.androidx.camera.view)
             implementation(libs.androidx.camera.mlkit.vision)
             implementation(libs.play.services.mlkit.text.recognition)
-            implementation(libs.iconsax.android)
         }
         commonMain.dependencies {
             implementation(projects.core.common)

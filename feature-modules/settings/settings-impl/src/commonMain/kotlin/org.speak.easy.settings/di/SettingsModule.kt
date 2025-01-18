@@ -9,7 +9,7 @@ import org.speak.easy.settings.category.CategoryFactory
 import org.speak.easy.settings.theme.ThemeViewModel
 
 val settingsModule = module {
-    single { SettingsViewModel(get(), get(), get(), get()) }
+    single { SettingsViewModel(get(), get(), get(), get(), get(), get()) }
     single { ThemeViewModel(get()) }
     single { AboutAppViewModel(get(), get(), get()) }
     factory { CategoryFactory() }

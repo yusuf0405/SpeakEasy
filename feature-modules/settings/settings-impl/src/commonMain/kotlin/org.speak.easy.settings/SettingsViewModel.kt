@@ -9,6 +9,8 @@ import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.update
+import org.speak.easy.core.AppLauncher
+import org.speak.easy.core.AppRater
 import org.speak.easy.core.DispatcherProvider
 import org.speak.easy.core.exstensions.launchSafe
 import org.speak.easy.core.exstensions.stateInWhileSubscribed
@@ -22,6 +24,8 @@ class SettingsViewModel(
     private val categoryFactory: CategoryFactory,
     private val dispatcherProvider: DispatcherProvider,
     private val clearHistoryUseCase: ClearHistoryUseCase,
+    private val appRater: AppRater,
+    private val appLauncher: AppLauncher,
     private val navigator: Navigator
 ) : ViewModel() {
 
@@ -30,6 +34,9 @@ class SettingsViewModel(
 
     private val _launchClearHistory = MutableSharedFlow<Boolean>()
     val launchClearHistory: SharedFlow<Boolean> = _launchClearHistory.asSharedFlow()
+
+    private val _launchRatingApp = MutableSharedFlow<Boolean>()
+    val launchRatingApp: SharedFlow<Boolean> = _launchRatingApp.asSharedFlow()
 
     private val _uiState: MutableStateFlow<SettingsUiState> =
         MutableStateFlow(SettingsUiState.default)
@@ -52,9 +59,14 @@ class SettingsViewModel(
             CategoryType.LANGUAGE -> showSettings()
             CategoryType.THEME -> navigateToChangeThemeScreen()
             CategoryType.CLEAN_HISTORY -> showClearHistoryPopup()
-            CategoryType.HELP_SUPPORT -> {}
+            CategoryType.RATE_APP -> showRatingApp()
+            CategoryType.HELP_SUPPORT -> openEmail()
             CategoryType.ABOUT_APP -> navigateToAboutAppScreen()
         }
+    }
+
+    fun openRateStorePage() {
+        appRater.openStorePage()
     }
 
     fun clearHistory() {
@@ -72,6 +84,22 @@ class SettingsViewModel(
     private fun navigateToAboutAppScreen() {
         viewModelScope.launchSafe {
             navigator.navigate(Destination.AboutAppScreen)
+        }
+    }
+
+    private fun openEmail() {
+        appLauncher.openEmail(BuildKonfig.EMAIL_CONTACT)
+    }
+
+    private fun showRatingApp() {
+        viewModelScope.launchSafe {
+            _launchRatingApp.emit(true)
+        }
+    }
+
+    fun dismissRatingApp() {
+        viewModelScope.launchSafe {
+            _launchRatingApp.emit(false)
         }
     }
 

@@ -9,7 +9,8 @@ enum class CategoryType {
     THEME,
     CLEAN_HISTORY,
     HELP_SUPPORT,
-    ABOUT_APP
+    ABOUT_APP,
+    RATE_APP,
 }
 
 @Immutable

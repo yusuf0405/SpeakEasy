@@ -19,7 +19,6 @@ internal fun Project.configureComposeMultiplatform(
         }
         commonMain {
             dependencies {
-                implementation(libs.findLibrary("composeIcons-featherIcons").get())
                 api(composeDeps.components.resources)
                 implementation(composeDeps.ui)
                 implementation(composeDeps.foundation)

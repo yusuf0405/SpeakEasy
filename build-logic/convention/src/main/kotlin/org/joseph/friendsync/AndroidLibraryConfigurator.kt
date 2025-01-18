@@ -56,7 +56,6 @@ internal fun Project.configureLibraryImplKotlinMultiplatform(
                 implementation(libs.findLibrary("koin-compose").get())
                 implementation(libs.findLibrary("coil-compose").get())
                 implementation(libs.findLibrary("kotlinx-datetime").get())
-                implementation(libs.findLibrary("napier").get())
             }
         }
         androidMain.dependencies {

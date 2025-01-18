@@ -14,6 +14,7 @@ import speakeasy.core.ui.generated.resources.apply_dark_theme
 import speakeasy.core.ui.generated.resources.clear_your_transfer_history
 import speakeasy.core.ui.generated.resources.help_support
 import speakeasy.core.ui.generated.resources.about_app
+import speakeasy.core.ui.generated.resources.rate_app
 
 actual class CategoryFactory {
 
@@ -40,6 +41,12 @@ actual class CategoryFactory {
     )
 
     actual fun moreCategories(): List<Category> = listOf(
+        Category(
+            title = Res.string.rate_app,
+            description = null,
+            resource = Res.drawable.rate_app,
+            type = CategoryType.RATE_APP
+        ),
         Category(
             title = Res.string.help_support,
             description = null,

@@ -4,6 +4,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
+import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -23,6 +24,7 @@ import org.speak.easy.permission.api.rememberUrlLauncher
 import org.speak.easy.settings.about.app.AboutAppScreen
 import org.speak.easy.settings.about.app.AboutAppViewModel
 import org.speak.easy.settings.category.CategoriesList
+import org.speak.easy.settings.rate.app.RateAppBottomDialog
 import org.speak.easy.settings.theme.ThemeScreen
 import org.speak.easy.settings.theme.ThemeViewModel
 import speakeasy.core.ui.generated.resources.Res
@@ -42,14 +44,23 @@ object SettingsFeature : FeatureApi {
         navGraphBuilder.composable(
             route = Destination.SettingsScreen.route
         ) {
-
             val viewModel = koinInject<SettingsViewModel>()
             val rationalPermissionDialogProvider = koinInject<RationalPermissionDialogProvider>()
 
             val urlLauncher = rememberUrlLauncher()
             val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+            val sheetState = rememberModalBottomSheetState()
             val launchSetting by viewModel.launchSetting.collectAsStateWithLifecycle(false)
             val launchClearHistory by viewModel.launchClearHistory.collectAsStateWithLifecycle(false)
+            val launchRatingApp by viewModel.launchRatingApp.collectAsStateWithLifecycle(false)
+
+            if (launchRatingApp) {
+                RateAppBottomDialog(
+                    onDismiss = viewModel::dismissRatingApp,
+                    onButton = viewModel::openRateStorePage,
+                    sheetState = sheetState
+                )
+            }
 
             if (launchSetting) {
                 urlLauncher.openAppSettings()
@@ -72,7 +83,6 @@ object SettingsFeature : FeatureApi {
                     }
                 )
             }
-
             Column(
                 modifier = Modifier.background(SpeakEasyTheme.colors.backgroundPrimary)
             ) {
