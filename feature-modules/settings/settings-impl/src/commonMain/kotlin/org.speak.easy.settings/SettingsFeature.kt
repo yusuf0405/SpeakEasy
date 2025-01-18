@@ -3,6 +3,8 @@ package org.speak.easy.settings
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.getValue
@@ -84,7 +86,9 @@ object SettingsFeature : FeatureApi {
                 )
             }
             Column(
-                modifier = Modifier.background(SpeakEasyTheme.colors.backgroundPrimary)
+                modifier = Modifier
+                    .background(SpeakEasyTheme.colors.backgroundPrimary)
+                    .verticalScroll(rememberScrollState())
             ) {
                 CategoriesList(
                     categories = uiState.categories,

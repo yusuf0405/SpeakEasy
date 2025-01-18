@@ -13,18 +13,13 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Icon
-import androidx.compose.material3.Switch
-import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.style.TextOverflow
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
@@ -92,6 +87,8 @@ private fun Content(
                 } else {
                     SpeakEasyTheme.colors.textPrimary
                 },
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis
             )
             SpacerHeight(SpeakEasyTheme.dimens.dp2)
             if (category.description != null) {
@@ -102,7 +99,9 @@ private fun Content(
                         SpeakEasyTheme.colors.accentNegative
                     } else {
                         SpeakEasyTheme.colors.textSecondary
-                    }
+                    },
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis
                 )
             }
         }

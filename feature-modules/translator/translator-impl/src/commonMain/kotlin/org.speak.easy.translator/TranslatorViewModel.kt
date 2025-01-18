@@ -49,19 +49,18 @@ internal class TranslatorViewModel(
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(TranslatorScreenUiState.unknown)
-    val uiState: StateFlow<TranslatorScreenUiState> = _uiState.onStart {
-        delay(DEFAULT_DELAY_TIME)
-        languagesHolder.fetchLanguages()
-    }.stateInWhileSubscribed(
-        viewModelScope,
-        TranslatorScreenUiState.unknown
-    )
+    val uiState: StateFlow<TranslatorScreenUiState> = _uiState.asStateFlow()
 
     val sourceText = sourceTextManager
         .sourceText
         .stateIn(viewModelScope, SharingStarted.Lazily, "")
 
     init {
+        viewModelScope.launchSafe {
+            delay(DEFAULT_DELAY_TIME)
+            languagesHolder.fetchLanguages()
+        }
+
         translationRepository
             .observeCurrentLanguageData()
             .onEach(::updateSelectedLanguage)
