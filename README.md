@@ -8,16 +8,60 @@ multiple languages and an easy-to-use interface, it’s perfect for travel and l
   Kotlin.
 
 [![Kotlin](https://img.shields.io/badge/Kotlin-2.0.21-blue.svg?style=flat&logo=kotlin)](https://kotlinlang.org)
-![badge-kmp](https://img.shields.io/badge/KMP-1.6.11-blue)
+![badge-kmp](https://img.shields.io/badge/KMP-1.7.3-blue)
 ![badge-android](http://img.shields.io/badge/platform-android-6EDB8D.svg?style=flat)
 ![badge-ios](http://img.shields.io/badge/platform-ios-CDCDCD.svg?style=flat)
 
-## Build
+## Project Structure
 
-* In project, implemented a composite build structure to enhance modularity and improve
-build times. This approach allows us to develop and test individual components independently while
-maintaining a cohesive project architecture. It simplifies dependency management and facilitates
-collaboration among team members.
+ [<img width="200" alt="image" src="https://github.com/yusuf0405/SpeakEasy/blob/master/assets/screenshots/structure/project_structure.png">]()
+
+### What is Modularization?
+
+* Modularization is the practice of dividing a monolithic codebase into independent, self-contained modules. This approach brings several advantages, such as parallel development, improved build times, better encapsulation, and enhanced reusability.
+
+### Benefits of Modularization
+- Scalability – Separation of concerns allows for independent feature development.
+- Parallel Development – Multiple developers can work on different modules simultaneously with minimal conflicts.
+- Ownership – Each module can have a dedicated owner responsible for its maintenance.
+- Encapsulation – Well-defined module boundaries enhance readability, testing, and maintainability.
+- Reduced Build Time – Incremental and parallel builds optimize the development workflow.
+- Reusability – Shared logic can be used across different apps or platforms.
+  
+### Potential Pitfalls
+- Too Many Modules – Excessive modularization can lead to increased build complexity.
+- Too Few Modules – Large, tightly coupled modules reduce the benefits of modularization.
+- Overcomplexity – Modularization should be aligned with project needs rather than applied blindly.
+  
+### Modularization Strategy
+
+* A well-structured module should have low coupling (minimal dependencies on other modules) and high cohesion (a well-defined responsibility). The project follows a layered modularization approach, separating concerns across core and feature-specific modules.
+
+### Core Modules
+These modules provide fundamental functionalities and architecture:
+
+* analytics - Handles event tracking and logging.
+* common - Contains shared utilities and extensions.
+* data - Manages data flow between repository and domain layers.
+* database - Implements local storage mechanisms.
+* datastore - Provides key-value storage solutions.
+* designsystem - Contains UI components and themes.
+* domain - Defines business logic and use cases.
+* navigation - Manages in-app navigation.
+* network - Handles API communication.
+* ui - Contains base UI logic.
+* ui-components - Reusable UI elements.
+ 
+### Feature Modules
+These modules encapsulate specific features of the application:
+
+* camera-capture - Handles camera-based text recognition.
+* history - Manages translation history.
+* languages - Provides language selection and handling.
+* permission - Manages app permissions.
+* settings - Implements user settings, including "Help & Support" and "About".
+* speech - Handles speech-to-text and text-to-speech functionalities.
+* translator - Core translation engine using various APIs.
 
 ## Libraries
 
