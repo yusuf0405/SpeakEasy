@@ -79,18 +79,20 @@ collaboration among team members.
 
 ### Android Screenshots
 
-[<img width="200" alt="image" src="https://github.com/yusuf0405/SpeakEasy/blob/master/assets/screenshots/android/light_main_screen.png">]()
-[<img width="200" alt="image" src="https://github.com/yusuf0405/SpeakEasy/blob/master/assets/screenshots/android/light_language_dialog.png">]()
-[<img width="200" alt="image" src="https://github.com/yusuf0405/SpeakEasy/blob/master/assets/screenshots/android/light_language_screen.png">]()
 [<img width="200" alt="image" src="https://github.com/yusuf0405/SpeakEasy/blob/master/assets/screenshots/android/dark_main_screen.png">]()
+[<img width="200" alt="image" src="https://github.com/yusuf0405/SpeakEasy/blob/master/assets/screenshots/android/dark_history_screen.png">]()
+[<img width="200" alt="image" src="https://github.com/yusuf0405/SpeakEasy/blob/master/assets/screenshots/android/dark_setting_screen.png">]()
+[<img width="200" alt="image" src="https://github.com/yusuf0405/SpeakEasy/blob/master/assets/screenshots/android/dark_camera_screen.png">]()
+[<img width="200" alt="image" src="https://github.com/yusuf0405/SpeakEasy/blob/master/assets/screenshots/android/dark_theme_screen.png">]()
+[<img width="200" alt="image" src="https://github.com/yusuf0405/SpeakEasy/blob/master/assets/screenshots/android/dark_about_app_screen.png">]()
 [<img width="200" alt="image" src="https://github.com/yusuf0405/SpeakEasy/blob/master/assets/screenshots/android/dark_language_dialog.png">]()
-[<img width="200" alt="image" src="https://github.com/yusuf0405/SpeakEasy/blob/master/assets/screenshots/android/dark_language_screen.png">]()
 
 ### iOS Screenshots
 
 [<img width="200" alt="image" src="https://github.com/yusuf0405/SpeakEasy/blob/master/assets/screenshots/ios/light_main_screen.png">]()
+[<img width="200" alt="image" src="https://github.com/yusuf0405/SpeakEasy/blob/master/assets/screenshots/ios/light_history_screen.png">]()
+[<img width="200" alt="image" src="https://github.com/yusuf0405/SpeakEasy/blob/master/assets/screenshots/ios/light_setting_screen.png">]()
+[<img width="200" alt="image" src="https://github.com/yusuf0405/SpeakEasy/blob/master/assets/screenshots/ios/light_theme_screen.png">]()
+[<img width="200" alt="image" src="https://github.com/yusuf0405/SpeakEasy/blob/master/assets/screenshots/ios/light_rate_app_screen.png">]()
+[<img width="200" alt="image" src="https://github.com/yusuf0405/SpeakEasy/blob/master/assets/screenshots/ios/light_about_app_screen.png">]()
 [<img width="200" alt="image" src="https://github.com/yusuf0405/SpeakEasy/blob/master/assets/screenshots/ios/light_language_dialog.png">]()
-[<img width="200" alt="image" src="https://github.com/yusuf0405/SpeakEasy/blob/master/assets/screenshots/ios/light_language_screen.png">]()
-[<img width="200" alt="image" src="https://github.com/yusuf0405/SpeakEasy/blob/master/assets/screenshots/ios/dark_main_screen.png">]()
-[<img width="200" alt="image" src="https://github.com/yusuf0405/SpeakEasy/blob/master/assets/screenshots/ios/dark_language_dialog.png">]()
-[<img width="200" alt="image" src="https://github.com/yusuf0405/SpeakEasy/blob/master/assets/screenshots/ios/dark_language_screen.png">]()
